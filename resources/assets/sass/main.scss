@@ -1,0 +1,75 @@
+/**
+ * General
+ */
+
+.pos-rel {
+  position:relative;
+}
+
+/**
+  Nav Sidebar
+ */
+.nav-sidebar.nav > li.active {
+  background-color: #1ab394;
+}
+.nav-sidebar.nav > li.active:hover {
+  background-color: #1ab394;
+}
+.nav-sidebar.nav > li.active > a {
+  color: #FFFFFF;
+}
+.nav-sidebar.nav > li.active > a:hover {
+  color: #FFFFFF;
+  background-color: #1ab394;
+}
+
+/**
+ Loader
+ */
+
+.loading-container {
+  text-align: center;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2147483647;
+  background-color: #fff;
+  opacity: 0.8;
+}
+
+.loading-inner {
+  display: table;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.loading-cell {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.loading-progress {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size:20px;
+}
+
+/**
+ Page Header
+ */
+
+.list-page-header {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+
+  .btn-new-entity {
+    position: absolute;
+    bottom: 2px;
+  }
+
+}

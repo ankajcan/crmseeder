@@ -1,0 +1,70 @@
+@font-face {
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?w3lzag');
+  src:  url('fonts/icomoon.eot?w3lzag#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?w3lzag') format('truetype'),
+    url('fonts/icomoon.woff?w3lzag') format('woff'),
+    url('fonts/icomoon.svg?w3lzag#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-Activity-Icon:before {
+  content: "\e900";
+  color: #3f7ffb;
+}
+.icon-Card-Icon:before {
+  content: "\e901";
+  color: #93a3ae;
+}
+.icon-Fee-Icon:before {
+  content: "\e902";
+  color: #93a3ae;
+}
+.icon-Label-icon:before {
+  content: "\e903";
+  color: #93a3ae;
+}
+.icon-Loyalty-Icon_24x24:before {
+  content: "\e904";
+  color: #93a3ae;
+}
+.icon-Loyalty-Icon:before {
+  content: "\e905";
+  color: #93a3ae;
+}
+.icon-My-items-icons:before {
+  content: "\e906";
+  color: #93a3ae;
+}
+.icon-Pickup-Icon:before {
+  content: "\e907";
+  color: #93a3ae;
+}
+.icon-Return-Icon:before {
+  content: "\e908";
+  color: #93a3ae;
+}
+.icon-Search-icon:before {
+  content: "\e909";
+  color: #93a3ae;
+}
+.icon-Settings-Icon:before {
+  content: "\e90a";
+  color: #93a3ae;
+}
