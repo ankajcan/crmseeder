@@ -5,7 +5,6 @@
             <th>ID</th>
             <th>Name</th>
             <th>Email</th>
-            <th>Roles</th>
             <th></th>
         </tr>
         </thead>
@@ -13,15 +12,10 @@
         @foreach($entities as $entity)
             <tr>
                 <td>{{ $entity->id }}</td>
-                <td>{{ $entity->first_name }} {{ $entity->last_name }}</td>
+                <td>{{ $entity->full_name }}</td>
                 <td>{{ $entity->email }}</td>
                 <td>
-                    @foreach($entity->roles as $role)
-                        <span class="label">{{ $role->name }}</span>
-                    @endforeach
-                </td>
-                <td>
-                    <a href="{{ route('user.show', ['id' => $entity->id]) }}" type="button" class="btn btn-xs btn-success">Edit</a>
+                    <a href="{{ route('contact.show', ['id' => $entity->id]) }}" type="button" class="btn btn-xs btn-success">Edit</a>
                 </td>
             </tr>
         @endforeach

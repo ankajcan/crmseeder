@@ -36,6 +36,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('users/{id}', 'Web\UserController@delete');
     Route::post('users/avatar-upload', 'Web\UserController@avatarUpload');
 
+    Route::get('/contacts/search', 'Web\ContactController@search');
+    Route::get('/contacts/{id}', 'Web\ContactController@show')->name('contact.show');
+    Route::get('/contacts', 'Web\ContactController@index')->name('contact.index');
+    Route::post('contacts', 'Web\ContactController@store');
+    Route::put('contacts/{id}', 'Web\ContactController@update');
+    Route::delete('contacts/{id}', 'Web\ContactController@delete');
+
     Route::get('/logout', 'Auth\AuthController@logout')->name('logout');
 
 });

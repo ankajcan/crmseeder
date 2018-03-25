@@ -3,8 +3,8 @@
 <head>
     <title>CRM Seeder</title>
     <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+    <link href="/fonts/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="/themes/inspinia/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/themes/inspinia/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="/themes/inspinia/css/animate.css" rel="stylesheet">
     <link href="/themes/inspinia/css/style.css" rel="stylesheet">
     <link href="/themes/inspinia/css/plugins/select2/select2.min.css" rel="stylesheet">
@@ -27,11 +27,13 @@
                 <li class="@if(Route::current()->getName() == 'dashboard') active @endif">
                     <a href="{{ route('dashboard') }}"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
                 </li>
+                <li class="@if(Route::current()->getName() == 'contact.index') active @endif">
+                    <a href="{{ route('contact.index') }}"><i class="fa fa-address-book"></i> <span class="nav-label">Contacts</span></a>
+                </li>
                 <li class="@if(Route::current()->getName() == 'user.index') active @endif">
                     <a href="{{ route('user.index') }}"><i class="fa fa-users"></i> <span class="nav-label">Users</span></a>
                 </li>
             </ul>
-
         </div>
     </nav>
 
@@ -53,26 +55,7 @@
         </div>
         @yield('content')
     </div>
-</div>
-<div id="loader" class="loading-container hidden">
-    <div class="loading-inner">
-        <div class="loading-cell">
-            <div class="sk-spinner sk-spinner-circle">
-                <div class="sk-circle1 sk-circle"></div>
-                <div class="sk-circle2 sk-circle"></div>
-                <div class="sk-circle3 sk-circle"></div>
-                <div class="sk-circle4 sk-circle"></div>
-                <div class="sk-circle5 sk-circle"></div>
-                <div class="sk-circle6 sk-circle"></div>
-                <div class="sk-circle7 sk-circle"></div>
-                <div class="sk-circle8 sk-circle"></div>
-                <div class="sk-circle9 sk-circle"></div>
-                <div class="sk-circle10 sk-circle"></div>
-                <div class="sk-circle11 sk-circle"></div>
-                <div class="sk-circle12 sk-circle"></div>
-            </div>
-        </div>
-    </div>
+    @include('components/loader')
 </div>
 
 <script src="/js/bootstrap.js"></script>

@@ -39,7 +39,7 @@
                         <div class="m-b-md">
 
                         </div>
-                        <form id="update-user" class="form-horizontal">
+                        <form id="update-entity" class="form-horizontal">
                             @if($entity->id)
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">ID</label>
@@ -107,23 +107,21 @@
                                 <label class="col-sm-2 control-label">Avatar</label>
                                 <div class="col-sm-10">
                                     @if($entity->avatar)
-                                        <img id="img-user-avatar" src="{{ $entity->avatar->url }}" class="img-lg"> <br> <br>
+                                        <img id="img-entity-avatar" src="{{ $entity->avatar->url }}" class="img-lg"> <br> <br>
                                     @else
-                                        <img id="img-user-avatar" src="http://via.placeholder.com/200x200?text=Avatar" class="img-lg"> <br> <br>
+                                        <img id="img-entity-avatar" src="http://via.placeholder.com/200x200?text=Avatar" class="img-lg"> <br> <br>
                                     @endif
                                     <a id="btn-avatar-upload" class="btn btn-success" @click="openUploadDialog"> Upload Photo</a>
-                                    <input type="hidden" id="input-user-avatar" name="avatar" value="" >
+                                    <input type="hidden" id="input-entity-avatar" name="avatar" value="" >
                                 </div>
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="col-xs-8">
                                     @if($entity->id)
-                                        <a id="btn-delete-user" data-user-id="{{ $entity->id }}" class="btn btn-danger pull-left">Delete User</a>
-                                        <button type="submit" class="btn btn-primary pull-right">Update User</button>
-                                    @else
-                                        <button type="submit" class="btn btn-primary pull-right">Save User</button>
+                                        <a id="btn-delete-entity" data-entity-id="{{ $entity->id }}" class="btn btn-danger pull-left">Delete</a>
                                     @endif
+                                        <button type="submit" class="btn btn-primary pull-right">Save</button>
                                 </div>
                             </div>
                         </form>

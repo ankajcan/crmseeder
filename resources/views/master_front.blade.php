@@ -3,8 +3,8 @@
 <head>
     <title>CRM Seeder</title>
     <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+    <link href="/fonts/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="/themes/inspinia/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/themes/inspinia/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="/themes/inspinia/css/animate.css" rel="stylesheet">
     <link href="/themes/inspinia/css/plugins/bootstrapSocial/bootstrap-social.css" rel="stylesheet">
     <link href="/themes/inspinia/css/style.css" rel="stylesheet">

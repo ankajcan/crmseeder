@@ -3,24 +3,26 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\ApiController;
+use App\Http\Requests\ContactStoreRequest;
+use App\Http\Requests\ContactUpdateRequest;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Http\Transformers\AssetTransformer;
 use App\Http\Transformers\UserTransformer;
+use App\Models\Contact;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 
 class ContactController extends ApiController
 {
-    private $entityClass = User::class;
-    private $entityTransformer = UserTransformer::class;
-    private $entityName = "User";
+    const MODEL_CLASS = Contact::class;
+    const MODEL_NAME = "Contact";
+    const MODEL_TEMPLATE_PATH = "contact";
 
     public function __construct()
     {
         parent::__construct();
-        $this->setTransformer(new UserTransformer());
     }
 
     /*
@@ -29,36 +31,34 @@ class ContactController extends ApiController
     |--------------------------------------------------------------------------
     */
 
-    public function store(UserStoreRequest $request)
+    public function store(ContactStoreRequest $request)
     {
-        $user = User::create($request->all());
-        $user->save();
+        $model = self::MODEL_CLASS;
 
-        $user->syncRoles($request->get('roles'));
+        $entity = $model::create($request->all());
+        $entity->save();
 
-        $user->uploadAvatar($request->get('avatar'));
-
-        return $this->respond(["message" => "User created successfully"]);
+        return $this->respond(["message" => self::MODEL_NAME. " created successfully"]);
     }
 
-    public function update(UserUpdateRequest $request, $id)
+    public function update(ContactUpdateRequest $request, $id)
     {
-        $user = User::find($id);
+        $model = self::MODEL_CLASS;
 
-        $user->update($request->all());
+        $entity = $model::find($id);
 
-        $user->syncRoles($request->get('roles'));
+        $entity->update($request->all());
 
-        $user->uploadAvatar($request->get('avatar'));
-
-        return $this->respond(["message" => "User updated successfully"]);
+        return $this->respond(["message" => self::MODEL_NAME. " updated successfully"]);
     }
 
     public function delete(Request $request, $id)
     {
-        User::find($id)->delete();
+        $model = self::MODEL_CLASS;
 
-        return $this->respond(["message" => "User deleted successfully"]);
+        $model::find($id)->delete();
+
+        return $this->respond(["message" => self::MODEL_NAME. "  deleted successfully"]);
     }
 
     /*
@@ -67,18 +67,31 @@ class ContactController extends ApiController
     |--------------------------------------------------------------------------
     */
 
-    public function listEntity(Request $request)
+    public function index(Request $request)
     {
-        $users = User::all();
+        $model = self::MODEL_CLASS;
 
-        return view('user/users', ["users" => $users]);
+        $entities = $model::search($request);
+
+        return view(self::MODEL_TEMPLATE_PATH.'/index', ["entities" => $entities]);
     }
 
-    public function singleEntity(Request $request, $id)
+    public function search(Request $request)
     {
-        $user = $id == "new" ? new User() : User::find($id);
+        $model = self::MODEL_CLASS;
 
-        return view('user/user', ["user" => $user]);
+        $entities = $model::search($request);
+
+        return $this->respond(view(self::MODEL_TEMPLATE_PATH.'/list', ["entities" => $entities])->render());
+    }
+
+    public function show(Request $request, $id)
+    {
+        $model = self::MODEL_CLASS;
+
+        $entity = $id == "new" ? new $model(['type' => $model::TYPE_PERSON]) : $model::find($id);
+
+        return view(self::MODEL_TEMPLATE_PATH.'/show', ["entity" => $entity]);
     }
 
 }

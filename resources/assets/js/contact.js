@@ -12,8 +12,8 @@ $("#update-entity").submit(function( event ) {
     let data = Helper.getFormResults(this);
     Helper.startLoading();
 
-    if(data['id'] != undefined) { // UPDATE USER
-        axios.put(base_api +'/users/'+ data['id'], data)
+    if(data['id'] != undefined) { // UPDATE
+        axios.put(base_api +'/contacts/'+ data['id'], data)
             .then(function (response) {
                 location.reload();
             })
@@ -22,10 +22,10 @@ $("#update-entity").submit(function( event ) {
                 errors.show();
                 Helper.endLoading();
             });
-    } else { // NEW USER
-        axios.post(base_api +'/users', data)
+    } else { // NEW
+        axios.post(base_api +'/contacts', data)
             .then(function (response) {
-                window.location.href = '/users';
+                window.location.href = '/contacts';
             })
             .catch(function (error) {
                 errors.record(error.response.data.details);
@@ -44,58 +44,46 @@ $("#btn-delete-entity").on('click', function(evt) {
 
     swal({
         title: "Are you sure?",
-        text: "Once deleted, you will not be able to recover this user!",
+        text: "Once deleted, you will not be able to recover this contact!",
         icon: "warning",
         buttons: true,
         dangerMode: true,
     })
-    .then((willDelete) => {
-        if (willDelete) {
-            let entity_id = $(this).attr("data-entity-id");
+        .then((willDelete) => {
+            if (willDelete) {
+                let entity_id = $(this).attr("data-entity-id");
 
-            axios.delete(base_api + '/users/'+entity_id, {})
-                .then(function (response) {
-                    window.location.href = '/users';
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-        }
-    });
+                axios.delete(base_api + '/contacts/'+entity_id, {})
+                    .then(function (response) {
+                        window.location.href = '/contacts';
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
+        });
 
 });
 
 /**
- * Open user avatar upload dialog
+ * Type update
  */
-$("#btn-avatar-upload").on('click', function(evt) {
-    $("#input-avatar-upload").click();
-});
+$('select[name="type"]').on('change', function () {
+    let input_first_name =  $('input[name="first_name"]');
+    let input_name =  $('input[name="name"]');
 
-/**
- * Upload user avatar
- */
-$("#input-avatar-upload").on('change', function(evt) {
-    let files = evt.target.files;
-    let formData = new FormData();
-    formData.append('file',files[0]);
-    let config = {
-        headers: {
-            'content-type': 'multipart/form-data'
-        }
-    };
-    Helper.startLoading();
-    axios.post(base_api + '/users/avatar-upload', formData, config)
-        .then(response => {
-            console.log(response.data);
-            $("#img-entity-avatar").attr("src","/"+response.data);
-            $("#input-entity-avatar").val(response.data);
-            Helper.endLoading();
-        }).catch(function (error) {
-            console.log(error);
-            Helper.endLoading();
-    })
 
+    if($(this).val() == 2) { // If organisation
+        $('.person-name-container').addClass('hidden');
+        $('.organisation-name-container').removeClass('hidden');
+        input_first_name.prop('required',false);
+        input_name.prop('required',true);
+    } else { // If person
+        $('.person-name-container').removeClass('hidden');
+        $('.organisation-name-container').addClass('hidden');
+        input_first_name.prop('required',true);
+        input_name.prop('required',false);
+    }
 });
 
 /**
@@ -106,7 +94,7 @@ $('#search-form input[name="search"]').on('keyup', function () {
     clearTimeout(inputTypingTimer);
     inputTypingTimer = setTimeout(function() {
         submitSearchForm({reset_pagination: true});
-        },300);
+    },300);
 });
 $('#search-form input[name="search"]').on('keydown', function () {
     clearTimeout(inputTypingTimer);
@@ -119,7 +107,7 @@ $("#search-form").submit(function( event ) {
 
     window.history.pushState("ajax", "Search", base_api + '?'+query);
 
-    axios.get(base_api + '/users/search?'+query)
+    axios.get(base_api + '/contacts/search?'+query)
         .then(function (response) {
             $('.list-container').html(response.data);
             paginationEvents();
