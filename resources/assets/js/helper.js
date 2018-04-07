@@ -76,7 +76,6 @@ class Helper {
                     }
                     break;
                 case 'text':
-                    if(elem.value != ""){
                         dots = elem.name.split(".");
                         if(dots.length > 1) {
                             var brackets = dots[0].search(/\[[0-9]\]/);
@@ -105,10 +104,8 @@ class Helper {
                         } else {
                             formParams[elem.name] = elem.value;
                         }
-                    }
                     break;
                 case 'number':
-                    if(elem.value != ""){
                         dots = elem.name.split(".");
                         if(dots.length > 1) {
                             var brackets = dots[0].search(/\[[0-9]\]/);
@@ -137,7 +134,6 @@ class Helper {
                         } else {
                             formParams[elem.name] = elem.value;
                         }
-                    }
                     break;
                 default:
                     dots = elem.name.split(".");

@@ -18,6 +18,10 @@ class RolesTableSeeder extends Seeder
         $rows[] = Role::create([ 'name' => 'User']);
 
         foreach($rows as $row) {
+            $role = Role::where("name",$row->name)->first();
+            if(!$role) {
+                $row->save();
+            }
             $row->save();
         }
     }

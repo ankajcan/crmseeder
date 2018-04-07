@@ -10,6 +10,7 @@ use App\Http\Requests\UserUpdateRequest;
 use App\Http\Transformers\AssetTransformer;
 use App\Http\Transformers\UserTransformer;
 use App\Models\Contact;
+use App\Models\Country;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -48,6 +49,8 @@ class ContactController extends ApiController
         $entity = $model::find($id);
 
         $entity->update($request->all());
+
+        $entity->manageAddress($request);
 
         return $this->respond(["message" => self::MODEL_NAME. " updated successfully"]);
     }
@@ -91,7 +94,9 @@ class ContactController extends ApiController
 
         $entity = $id == "new" ? new $model(['type' => $model::TYPE_PERSON]) : $model::find($id);
 
-        return view(self::MODEL_TEMPLATE_PATH.'/show', ["entity" => $entity]);
+        $countries = Country::all();
+
+        return view(self::MODEL_TEMPLATE_PATH.'/show', ["entity" => $entity, "countries" => $countries]);
     }
 
 }

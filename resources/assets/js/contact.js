@@ -12,9 +12,10 @@ $("#update-entity").submit(function( event ) {
     let data = Helper.getFormResults(this);
     Helper.startLoading();
 
-    if(data['id'] != undefined) { // UPDATE
+    if(data['id'] !== undefined) { // UPDATE
         axios.put(base_api +'/contacts/'+ data['id'], data)
             .then(function (response) {
+                console.log(response.data);
                 location.reload();
             })
             .catch(function (error) {

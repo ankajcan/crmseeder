@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Requests\Request;
 use Illuminate\Database\Eloquent\Model;
 
 class Contact extends Model
@@ -17,7 +18,23 @@ class Contact extends Model
      */
     public $guarded = ['id'];
 
-    protected $fillable = ['type', 'title', 'name', 'first_name', 'last_name', 'email', 'phone', 'user_id', 'company_id', 'address_id' ];
+    protected $fillable = ['type', 'title', 'name', 'first_name', 'last_name', 'email', 'phone', 'user_id', 'company_id'];
+
+    public function address()
+    {
+        return $this->hasOne(Address::class);
+    }
+
+    public function manageAddress($request)
+    {
+        $address = $request->get('address');
+
+        if(isset($address['id'])) {
+            $this->address->update($address);
+        } else {
+            Address::create(array_merge(['contact_id' => $this->id],$address));
+        }
+    }
 
     public function getFullNameAttribute($value)
     {
@@ -40,6 +57,7 @@ class Contact extends Model
                 $query->where('contacts.first_name', 'LIKE', '%'.$search.'%');
                 $query->orWhere('contacts.last_name', 'LIKE', '%'.$search.'%');
                 $query->orWhere('contacts.email', 'LIKE', '%'.$search.'%');
+                $query->orWhere('contacts.phone', 'LIKE', '%'.$search.'%');
             });
         }
 

@@ -350,69 +350,65 @@ var Helper = function () {
                         }
                         break;
                     case 'text':
-                        if (elem.value != "") {
-                            dots = elem.name.split(".");
-                            if (dots.length > 1) {
-                                var brackets = dots[0].search(/\[[0-9]\]/);
-                                if (brackets > -1) {
-                                    // items[0].something
-                                    var key = dots[0].substring(0, brackets); // items
-                                    var index = dots[0][brackets + 1]; // 0
-                                    if (!formParams.hasOwnProperty(key)) {
-                                        formParams[key] = [];
-                                    }
-                                    if (!formParams[key].hasOwnProperty(index)) {
-                                        formParams[key][index] = {};
-                                    }
-                                    formParams[key][index][dots[1]] = elem.value;
-                                } else {
-                                    if (!formParams.hasOwnProperty(dots[0])) {
-                                        formParams[dots[0]] = {};
-                                    }
-                                    formParams[dots[0]][dots[1]] = elem.value;
+                        dots = elem.name.split(".");
+                        if (dots.length > 1) {
+                            var brackets = dots[0].search(/\[[0-9]\]/);
+                            if (brackets > -1) {
+                                // items[0].something
+                                var key = dots[0].substring(0, brackets); // items
+                                var index = dots[0][brackets + 1]; // 0
+                                if (!formParams.hasOwnProperty(key)) {
+                                    formParams[key] = [];
                                 }
-                            } else if (elem.name.slice(-2) === '[]') {
-                                var _key3 = elem.name.substring(0, elem.name.length - 2);
-                                if (!formParams.hasOwnProperty(_key3)) {
-                                    formParams[_key3] = [];
+                                if (!formParams[key].hasOwnProperty(index)) {
+                                    formParams[key][index] = {};
                                 }
-                                formParams[_key3].push(elem.value);
+                                formParams[key][index][dots[1]] = elem.value;
                             } else {
-                                formParams[elem.name] = elem.value;
+                                if (!formParams.hasOwnProperty(dots[0])) {
+                                    formParams[dots[0]] = {};
+                                }
+                                formParams[dots[0]][dots[1]] = elem.value;
                             }
+                        } else if (elem.name.slice(-2) === '[]') {
+                            var _key3 = elem.name.substring(0, elem.name.length - 2);
+                            if (!formParams.hasOwnProperty(_key3)) {
+                                formParams[_key3] = [];
+                            }
+                            formParams[_key3].push(elem.value);
+                        } else {
+                            formParams[elem.name] = elem.value;
                         }
                         break;
                     case 'number':
-                        if (elem.value != "") {
-                            dots = elem.name.split(".");
-                            if (dots.length > 1) {
-                                var brackets = dots[0].search(/\[[0-9]\]/);
-                                if (brackets > -1) {
-                                    // items[0].something
-                                    var key = dots[0].substring(0, brackets); // items
-                                    var index = dots[0][brackets + 1]; // 0
-                                    if (!formParams.hasOwnProperty(key)) {
-                                        formParams[key] = [];
-                                    }
-                                    if (!formParams[key].hasOwnProperty(index)) {
-                                        formParams[key][index] = {};
-                                    }
-                                    formParams[key][index][dots[1]] = elem.value;
-                                } else {
-                                    if (!formParams.hasOwnProperty(dots[0])) {
-                                        formParams[dots[0]] = {};
-                                    }
-                                    formParams[dots[0]][dots[1]] = elem.value;
+                        dots = elem.name.split(".");
+                        if (dots.length > 1) {
+                            var brackets = dots[0].search(/\[[0-9]\]/);
+                            if (brackets > -1) {
+                                // items[0].something
+                                var key = dots[0].substring(0, brackets); // items
+                                var index = dots[0][brackets + 1]; // 0
+                                if (!formParams.hasOwnProperty(key)) {
+                                    formParams[key] = [];
                                 }
-                            } else if (elem.name.slice(-2) === '[]') {
-                                var _key4 = elem.name.substring(0, elem.name.length - 2);
-                                if (!formParams.hasOwnProperty(_key4)) {
-                                    formParams[_key4] = [];
+                                if (!formParams[key].hasOwnProperty(index)) {
+                                    formParams[key][index] = {};
                                 }
-                                formParams[_key4].push(elem.value);
+                                formParams[key][index][dots[1]] = elem.value;
                             } else {
-                                formParams[elem.name] = elem.value;
+                                if (!formParams.hasOwnProperty(dots[0])) {
+                                    formParams[dots[0]] = {};
+                                }
+                                formParams[dots[0]][dots[1]] = elem.value;
                             }
+                        } else if (elem.name.slice(-2) === '[]') {
+                            var _key4 = elem.name.substring(0, elem.name.length - 2);
+                            if (!formParams.hasOwnProperty(_key4)) {
+                                formParams[_key4] = [];
+                            }
+                            formParams[_key4].push(elem.value);
+                        } else {
+                            formParams[elem.name] = elem.value;
                         }
                         break;
                     default:
@@ -1188,9 +1184,10 @@ $("#update-entity").submit(function (event) {
     var data = __WEBPACK_IMPORTED_MODULE_0__helper_js__["a" /* default */].getFormResults(this);
     __WEBPACK_IMPORTED_MODULE_0__helper_js__["a" /* default */].startLoading();
 
-    if (data['id'] != undefined) {
+    if (data['id'] !== undefined) {
         // UPDATE
         axios.put(base_api + '/contacts/' + data['id'], data).then(function (response) {
+            console.log(response.data);
             location.reload();
         }).catch(function (error) {
             errors.record(error.response.data.details);

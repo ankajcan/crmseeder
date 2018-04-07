@@ -11,11 +11,13 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        \Illuminate\Support\Facades\DB::table('users')->truncate();
+        $user = \App\Models\User::where("email", "admin@admin.com")->first();
 
-        $user = factory(\App\Models\User::class)->create(['email' => 'admin@admin.com']);
+        if(!$user) {
+            $user = factory(\App\Models\User::class)->create(['email' => 'admin@admin.com']);
 
-        $user->assignRole('Admin');
+            $user->assignRole('Admin');
+        }
 
     }
 }
