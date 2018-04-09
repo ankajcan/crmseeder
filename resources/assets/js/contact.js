@@ -87,6 +87,78 @@ $('select[name="type"]').on('change', function () {
     }
 });
 
+
+/***********
+ * File upload
+ ************* /
+
+/**
+ * Open upload product photos dialog
+ */
+$("#btn-files-upload").on('click', function(evt) {
+    $("#input-files-upload").click();
+});
+
+/**
+ * Upload entity photo
+ */
+$("#input-files-upload").on('change', function(evt) {
+    let files = evt.target.files;
+    let formData = new FormData();
+    formData.append('file',files[0]);
+    let config = {
+        headers: {
+            'content-type': 'multipart/form-data'
+        }
+    };
+
+    let entity_id = $(this).attr("data-entity-id");
+
+    Helper.startLoading();
+    axios.post(base_api + '/contacts/'+entity_id+'/file-upload', formData, config)
+        .then(response => {
+
+            $(".entity-photos").append(response.data);
+
+            Helper.endLoading();
+        }).catch(function (error) {
+        console.log(error);
+        Helper.endLoading();
+    })
+});
+
+/**
+ * Delete delete photo
+ */
+$(".btn-delete-file").on('click', function(evt) {
+
+    let entity_id = $(this).attr("data-entity-id");
+
+    swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover this file!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                Helper.startLoading();
+                axios.delete(base_api + '/assets/'+entity_id)
+                    .then(response => {
+
+                        $("#container-file-"+entity_id).remove();
+
+                        Helper.endLoading();
+                    }).catch(function (error) {
+                    console.log(error);
+                    Helper.endLoading();
+                });
+            }
+        });
+});
+
+
 /**
  * Search
  */

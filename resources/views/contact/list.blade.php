@@ -2,20 +2,36 @@
     <table class="table table-hover">
         <thead>
         <tr>
-            <th>ID</th>
+            <th>
+                <div class="checkbox">
+                    <input type="checkbox">
+                    <label>
+                        &nbsp;
+                    </label>
+                </div>
+            </th>
             <th>Name</th>
             <th>Email</th>
+            <th>Phone</th>
             <th></th>
         </tr>
         </thead>
         <tbody>
         @foreach($entities as $entity)
-            <tr>
-                <td>{{ $entity->id }}</td>
+            <tr data-href="{{ route('contact.show', ['id' => $entity->id]) }}" class="clickable-row cursor-pointer">
+                <td>
+                    <div class="checkbox" >
+                        <input id="checkbox1" type="checkbox">
+                        <label for="checkbox1">
+                            &nbsp;
+                        </label>
+                    </div>
+                </td>
                 <td>{{ $entity->full_name }}</td>
                 <td>{{ $entity->email }}</td>
+                <td>{{ $entity->phone }}</td>
                 <td>
-                    <a href="{{ route('contact.show', ['id' => $entity->id]) }}" type="button" class="btn btn-xs btn-success">Edit</a>
+
                 </td>
             </tr>
         @endforeach

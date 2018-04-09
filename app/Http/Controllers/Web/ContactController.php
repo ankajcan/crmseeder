@@ -5,14 +5,10 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\ApiController;
 use App\Http\Requests\ContactStoreRequest;
 use App\Http\Requests\ContactUpdateRequest;
-use App\Http\Requests\UserStoreRequest;
-use App\Http\Requests\UserUpdateRequest;
-use App\Http\Transformers\AssetTransformer;
-use App\Http\Transformers\UserTransformer;
 use App\Models\Contact;
 use App\Models\Country;
-use App\Models\User;
 use Illuminate\Http\Request;
+use Project\Services\FileService;
 
 
 class ContactController extends ApiController
@@ -39,6 +35,9 @@ class ContactController extends ApiController
         $entity = $model::create($request->all());
         $entity->save();
 
+        $entity->manageAddress($request);
+        $entity->saveFiles($request);
+
         return $this->respond(["message" => self::MODEL_NAME. " created successfully"]);
     }
 
@@ -62,6 +61,28 @@ class ContactController extends ApiController
         $model::find($id)->delete();
 
         return $this->respond(["message" => self::MODEL_NAME. "  deleted successfully"]);
+    }
+
+    public function fileUpload(Request $request, $id)
+    {
+        $file = FileService::saveFileLocal($request->files->get('file'));
+        // New entity
+        if($id == "new") {
+            $response = FileService::uploadAsset($file);
+        } else {
+            $model = self::MODEL_CLASS;
+            $entity = $model::find($id);
+            // Upload to AWS
+            $response = $entity->uploadFile($file);
+        }
+
+        if(!$response["status"]) {
+            return $this->setStatusCode(400)->respondWithError($response['message']);
+        }
+
+        $uploadedFile = $response['data'];
+
+        return $this->respond(view('components/entity_file', ['file' => $uploadedFile])->render());
     }
 
     /*

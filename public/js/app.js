@@ -803,6 +803,11 @@ $('#sign-up-modal').on('shown.bs.modal', function (e) {
     errors.clear();
 });
 
+// Clickable Element
+$(".clickable-row").click(function () {
+    window.document.location = $(this).data("href");
+});
+
 /***/ }),
 /* 39 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -1253,6 +1258,73 @@ $('select[name="type"]').on('change', function () {
         input_first_name.prop('required', true);
         input_name.prop('required', false);
     }
+});
+
+/***********
+ * File upload
+ ************* /
+
+/**
+ * Open upload product photos dialog
+ */
+$("#btn-files-upload").on('click', function (evt) {
+    $("#input-files-upload").click();
+});
+
+/**
+ * Upload entity photo
+ */
+$("#input-files-upload").on('change', function (evt) {
+    var files = evt.target.files;
+    var formData = new FormData();
+    formData.append('file', files[0]);
+    var config = {
+        headers: {
+            'content-type': 'multipart/form-data'
+        }
+    };
+
+    var entity_id = $(this).attr("data-entity-id");
+
+    __WEBPACK_IMPORTED_MODULE_0__helper_js__["a" /* default */].startLoading();
+    axios.post(base_api + '/contacts/' + entity_id + '/file-upload', formData, config).then(function (response) {
+
+        $(".entity-photos").append(response.data);
+
+        __WEBPACK_IMPORTED_MODULE_0__helper_js__["a" /* default */].endLoading();
+    }).catch(function (error) {
+        console.log(error);
+        __WEBPACK_IMPORTED_MODULE_0__helper_js__["a" /* default */].endLoading();
+    });
+});
+
+/**
+ * Delete delete photo
+ */
+$(".btn-delete-file").on('click', function (evt) {
+
+    var entity_id = $(this).attr("data-entity-id");
+
+    __WEBPACK_IMPORTED_MODULE_2_sweetalert___default()({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover this file!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+    }).then(function (willDelete) {
+        if (willDelete) {
+            __WEBPACK_IMPORTED_MODULE_0__helper_js__["a" /* default */].startLoading();
+            axios.delete(base_api + '/assets/' + entity_id).then(function (response) {
+
+                $("#container-file-" + entity_id).remove();
+
+                __WEBPACK_IMPORTED_MODULE_0__helper_js__["a" /* default */].endLoading();
+            }).catch(function (error) {
+                console.log(error);
+                __WEBPACK_IMPORTED_MODULE_0__helper_js__["a" /* default */].endLoading();
+            });
+        }
+    });
 });
 
 /**

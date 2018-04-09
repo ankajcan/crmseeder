@@ -37,4 +37,25 @@ class AwsService{
         ));
     }
 
+    public static function copy($key, $sourceKey)
+    {
+        $s3 = App::make('aws')->createClient('s3');
+
+        try {
+            $result = $s3->copyObject(array(
+                'Bucket' => env('AWS_S3_BUCKET'),
+                'Key' => $key,
+                'CopySource' => env('AWS_S3_BUCKET')."/".$sourceKey,
+                'ACL' => 'public-read'
+            ));
+
+            return  ["status" => true, "data" => $result];
+
+        } catch (S3Exception $e) {
+
+            return  ["status" => false, "message" => $e->getMessage()];
+        }
+
+    }
+
 }

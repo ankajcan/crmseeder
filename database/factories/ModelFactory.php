@@ -18,7 +18,7 @@ $factory->define(App\Models\User::class, function (Faker\Generator $faker) {
         'first_name' => 'Admin',
         'last_name' => 'Admin',
         'email' => $faker->email(),
-        'password' => 'password',
+        'password' => \Illuminate\Support\Facades\Hash::make('password'),
         'remember_token' => str_random(10),
         'confirmed' => 1
     ];

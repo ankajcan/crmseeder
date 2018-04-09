@@ -109,8 +109,11 @@
                                     <input type="hidden" name="address.id" value="{{ $entity->address->id }}" />
                                 @endif
                                 <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <h3>Address</h3>
+                                    </div>
                                     <div class="col-sm-4">
-                                            <label>Address</label>
+                                            <label>Street address</label>
                                             <input type="text" name="address.address" class="form-control"
                                                    value="{{ $entity->address ? $entity->address->address : '' }}" />
                                     </div>
@@ -151,15 +154,45 @@
                                         </select>
                                     </div>
                                 </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-xs-8">
-                                    @if($entity->id)
-                                        <a id="btn-delete-entity" data-entity-id="{{ $entity->id }}" class="btn btn-danger pull-left">Delete</a>
-                                    @endif
-                                        <button type="submit" class="btn btn-primary pull-right">Save</button>
+                                <hr>
+                                <div class="form-group">
+                                    <div class="col-sm-12 animated fadeInRight">
+                                        <h3>
+                                            Files
+                                            <a id="btn-files-upload" class="btn btn-success btn-sm" > <i class="fa fa-upload"></i> Upload </a>
+                                        </h3>
+                                        <div class="row m-b-md">
+                                            <div class="col-xs-12">
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12 entity-photos">
+                                                @foreach($entity->files as $file)
+                                                    @include('components/entity_file',['file' => $file])
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                                <hr>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <h3>Notes</h3>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                        <div class="col-xs-8">
+                                            @if($entity->id)
+                                                <a id="btn-delete-entity" data-entity-id="{{ $entity->id }}" class="btn btn-danger pull-left">Delete</a>
+                                            @endif
+                                                <button type="submit" class="btn btn-primary pull-right">Save</button>
+                                        </div>
+                                 </div>
+                        </form>
+                        <form class="hidden" enctype="multipart/form-data">
+                            <input id="input-files-upload" data-entity-id="@if($entity->id) {{$entity->id}} @else{{ 'new' }}@endif" type="file" name="file" />
                         </form>
                     </div>
                 </div>

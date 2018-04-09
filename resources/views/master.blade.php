@@ -6,8 +6,9 @@
     <link href="/fonts/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="/themes/inspinia/css/bootstrap.min.css" rel="stylesheet">
     <link href="/themes/inspinia/css/animate.css" rel="stylesheet">
-    <link href="/themes/inspinia/css/style.css" rel="stylesheet">
     <link href="/themes/inspinia/css/plugins/select2/select2.min.css" rel="stylesheet">
+    <link href="/themes/inspinia/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
+    <link href="/themes/inspinia/css/style.css" rel="stylesheet">
     <link href="/css/app.css" rel="stylesheet">
 </head>
 <body class="pace-done">

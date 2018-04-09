@@ -42,6 +42,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('contacts', 'Web\ContactController@store');
     Route::put('contacts/{id}', 'Web\ContactController@update');
     Route::delete('contacts/{id}', 'Web\ContactController@delete');
+    Route::post('/contacts/{id}/file-upload', 'Web\ContactController@fileUpload');
+
+    Route::delete('assets/{id}', 'Web\AssetController@delete');
 
     Route::get('/logout', 'Auth\AuthController@logout')->name('logout');
 

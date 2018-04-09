@@ -6,6 +6,10 @@
   position: relative;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 /**
   Nav Sidebar
  */
@@ -74,6 +78,24 @@
 .list-page-header .btn-new-entity {
   position: absolute;
   bottom: 2px;
+}
+
+/**
+ File Container
+ */
+
+.file-container .image {
+  background-size: cover;
+  background-position: 50% 50%;
+}
+
+.file-container .file-name {
+  height: 60px;
+  word-break: break-all;
+}
+
+.file-container .btn-delete-file {
+  color: grey;
 }
 
 .item-container .image-box {

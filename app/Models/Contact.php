@@ -4,6 +4,9 @@ namespace App\Models;
 
 use App\Http\Requests\Request;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use Project\Services\AwsService;
+use Project\Services\FileService;
 
 class Contact extends Model
 {
@@ -25,6 +28,11 @@ class Contact extends Model
         return $this->hasOne(Address::class);
     }
 
+    public function files()
+    {
+        return $this->hasMany(Asset::class, 'entity_id', 'id')->where(["entity_type" => self::class]);
+    }
+
     public function manageAddress($request)
     {
         $address = $request->get('address');
@@ -43,6 +51,97 @@ class Contact extends Model
         } else {
             return $this->first_name . " ". $this->last_name;
         }
+    }
+
+    /**
+     * Upload local file to Amazon S3
+     * @param $filePath
+     * @return mixed
+     */
+    public function uploadFile($filePath)
+    {
+
+        DB::beginTransaction();
+
+        try {
+            $filename = FileService::getFileNameFromPath($filePath);
+
+            $key = 'contacts/'. $this->id . '/'.$filename;
+            $result = AwsService::uploadToS3($key, $filePath);
+            if (!$result["status"]) {
+                DB::rollBack();
+                return $result;
+            }
+
+            $newFile = new Asset([
+                'name' => $filename,
+                'path' => $key,
+                'entity_id' => $this->id,
+                'entity_type' => self::class,
+                'type' => 0,
+                'featured' => 0
+            ]);
+            $newFile->save();
+
+            // SAVE THUMB IF IMAGE
+            if($newFile->file_type == "image") {
+                $thumbPath = FileService::createThumbnail($filePath);
+                $key = 'contacts/' . $this->id . '/thumb/' . $filename;
+                AwsService::uploadToS3($key,$thumbPath);
+                if (!$result["status"]) {
+                    DB::rollBack();
+                    return $result;
+                }
+            }
+
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return ["status" => false, "message" => $e->getMessage()];
+        }
+
+        DB::commit();
+
+        return ["status" => true, "message" => "Successfully", "data" => $newFile];
+    }
+
+    /**
+     * Save uploaded files when new entity created
+     * @param $request
+     * @return mixed
+     */
+    public function saveFiles($request)
+    {
+        if(!$request->has('files')) { return false; }
+
+        $assetIDs = $request->get('files');
+
+        foreach($assetIDs as $assetID) {
+
+            $asset = Asset::find($assetID);
+            if(!$asset) { continue; }
+
+            $newKey = 'contacts/'. $this->id . '/'.$asset->name;
+            $result = AwsService::copy($newKey,$asset->path);
+            if (!$result["status"]) {
+                return $result;
+            }
+
+            // COPY THUMB IF IMAGE
+            if($asset->file_type == "image") {
+                $key = 'contacts/'. $this->id . '/thumb/'.$asset->name;
+                $result = AwsService::copy($key,$asset->thumb_path);
+            }
+
+            // REMOVE TMP
+            AwsService::removeFromS3($asset->path);
+
+            // UPDATE ASSET
+            $asset->update(["entity_type" => self::class, "entity_id" => $this->id, "path" => $newKey]);
+        }
+
+        return ["status" => true, "message" => "Successfully"];
+
     }
 
     public static function search($request)
