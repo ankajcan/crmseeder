@@ -3,7 +3,7 @@
         <thead>
         <tr>
             <th>
-                <div class="checkbox">
+                <div class="checkbox checkbox-inline">
                     <input type="checkbox">
                     <label>
                         &nbsp;
@@ -20,11 +20,9 @@
         @foreach($entities as $entity)
             <tr data-href="{{ route('contact.show', ['id' => $entity->id]) }}" class="clickable-row cursor-pointer">
                 <td>
-                    <div class="checkbox" >
-                        <input id="checkbox1" type="checkbox">
-                        <label for="checkbox1">
-                            &nbsp;
-                        </label>
+                    <div class="checkbox checkbox-inline preventable">
+                        <input type="checkbox">
+                        <label>&nbsp;</label>
                     </div>
                 </td>
                 <td>{{ $entity->full_name }}</td>

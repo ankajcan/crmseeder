@@ -3,6 +3,7 @@ import Helper from './helper.js';
 import Errors from './classes/Errors';
 import swal from 'sweetalert';
 let errors = new Errors();
+let preventable = false;
 
 /**
  * Update/create user
@@ -122,7 +123,7 @@ $("#search-form").submit(function( event ) {
     axios.get(base_api + '/users/search?'+query)
         .then(function (response) {
             $('.list-container').html(response.data);
-            paginationEvents();
+            bindEvents();
             Helper.endLoading();
         })
         .catch(function (error) {
@@ -146,15 +147,30 @@ function updatePage(page) {
 }
 
 /**
- * Pagination
+ * Events
  */
-function paginationEvents() {
+function bindEvents() {
     $('ul.pagination a').on('click', function (event) {
         updatePage($(this).attr('data-page'));
         submitSearchForm();
 
         event.preventDefault();
     });
+
+    // Clickable Element
+    $(".clickable-row").click(function() {
+        if(!preventable) {
+            window.document.location = $(this).data("href");
+        }
+    });
+
+    $(".preventable").click(function(event) {
+        preventable = true;
+        setTimeout(function(){
+            preventable = false;
+        }, 100);
+
+    });
 }
 
-paginationEvents();
+bindEvents();

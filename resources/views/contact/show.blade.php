@@ -178,7 +178,13 @@
                                 <hr>
                                 <div class="form-group">
                                     <div class="col-sm-12">
-                                        <h3>Notes</h3>
+                                        <h3>
+                                            Notes
+                                            <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#note-update-modal"> <i class="fa fa-plus"></i> Add </a>
+                                        </h3>
+                                        <div class="notes-container">
+                                            @include('components/notes_list',['entities' => $entity->notes])
+                                        </div>
                                     </div>
                                 </div>
                                 <hr>
@@ -199,4 +205,6 @@
             </div>
         </div>
     </div>
+    {{-- NEW NOTE MODAL --}}
+    @include('components/note_modal',['entity' => $entity])
 @stop

@@ -19,7 +19,6 @@ class UserTransformer extends TransformerAbstract {
             "last_name" => $user->last_name,
             "email" => $user->email,
             "roles" => $user->roles,
-            "stripe_customer_id" => $user->stripe_customer_id
         ];
     }
 

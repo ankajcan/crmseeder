@@ -46,6 +46,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::delete('assets/{id}', 'Web\AssetController@delete');
 
+    Route::post('notes', 'Web\NoteController@store');
+    Route::put('notes/{id}', 'Web\NoteController@update');
+    Route::delete('notes/{id}', 'Web\NoteController@delete');
+
     Route::get('/logout', 'Auth\AuthController@logout')->name('logout');
 
 });

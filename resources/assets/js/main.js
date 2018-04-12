@@ -77,9 +77,5 @@ $('#sign-up-modal').on('shown.bs.modal', function (e) {
     errors.clear();
 });
 
-// Clickable Element
-$(".clickable-row").click(function() {
-    window.document.location = $(this).data("href");
-});
 
 

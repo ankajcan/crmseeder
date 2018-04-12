@@ -33,6 +33,11 @@ class Contact extends Model
         return $this->hasMany(Asset::class, 'entity_id', 'id')->where(["entity_type" => self::class]);
     }
 
+    public function notes()
+    {
+        return $this->hasMany(Note::class, 'entity_id', 'id')->where(["entity_type" => self::class]);
+    }
+
     public function manageAddress($request)
     {
         $address = $request->get('address');
