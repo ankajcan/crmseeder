@@ -244,11 +244,12 @@ $("#update-note").submit(function( event ) {
     let data = Helper.getFormResults(this);
     Helper.startLoading();
 
-    if(data['id'] !== undefined) { // UPDATE
+    if(data['id'] !== undefined && data['id'] !== "") { // UPDATE
         axios.put(base_api +'/notes/'+ data['id'], data)
             .then(function (response) {
-                console.log(response.data);
-                location.reload();
+                $('#note-update-modal').modal('hide');
+                $(".notes-container").html(response.data.data);
+                Helper.endLoading();
             })
             .catch(function (error) {
                 errors.record(error.response.data.details);
@@ -271,3 +272,50 @@ $("#update-note").submit(function( event ) {
 
     event.preventDefault();
 });
+
+$("#btn-note-add").click(function() {
+    // Clear modal
+    $("#update-note [name='id']").val("");
+    $("#update-note [name='title']").val("");
+    $("#update-note [name='content']").val("");
+    // Open modal
+    $('#note-update-modal').modal('show');
+});
+
+$(document).on('click', '.btn-note-edit', function(){
+    let entity = JSON.parse($(this).attr('data-entity'));
+    // Fill modal
+    $("#update-note [name='id']").val(entity.id);
+    $("#update-note [name='title']").val(entity.title);
+    $("#update-note [name='content']").val(entity.content);
+    // Open modal
+    $('#note-update-modal').modal('show');
+});
+
+$(document).on('click', '.btn-note-delete', function(){
+    let entity_id = $(this).attr('data-entity-id');
+
+    swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover this note!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                Helper.startLoading();
+                axios.delete(base_api + '/notes/'+entity_id)
+                    .then(response => {
+                        $("#container-note-"+entity_id).remove();
+                        Helper.endLoading();
+                    }).catch(function (error) {
+                    console.log(error);
+                    Helper.endLoading();
+                });
+            }
+        });
+
+});
+
+

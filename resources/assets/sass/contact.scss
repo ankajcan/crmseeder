@@ -1,0 +1,12 @@
+.note-row {
+  .action button {
+    visibility: hidden;
+  }
+
+  &:hover{
+    .action button {
+      visibility: visible;
+    }
+  }
+
+}

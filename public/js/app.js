@@ -1421,11 +1421,12 @@ $("#update-note").submit(function (event) {
     var data = __WEBPACK_IMPORTED_MODULE_0__helper_js__["a" /* default */].getFormResults(this);
     __WEBPACK_IMPORTED_MODULE_0__helper_js__["a" /* default */].startLoading();
 
-    if (data['id'] !== undefined) {
+    if (data['id'] !== undefined && data['id'] !== "") {
         // UPDATE
         axios.put(base_api + '/notes/' + data['id'], data).then(function (response) {
-            console.log(response.data);
-            location.reload();
+            $('#note-update-modal').modal('hide');
+            $(".notes-container").html(response.data.data);
+            __WEBPACK_IMPORTED_MODULE_0__helper_js__["a" /* default */].endLoading();
         }).catch(function (error) {
             errors.record(error.response.data.details);
             errors.show();
@@ -1445,6 +1446,48 @@ $("#update-note").submit(function (event) {
     }
 
     event.preventDefault();
+});
+
+$("#btn-note-add").click(function () {
+    // Clear modal
+    $("#update-note [name='id']").val("");
+    $("#update-note [name='title']").val("");
+    $("#update-note [name='content']").val("");
+    // Open modal
+    $('#note-update-modal').modal('show');
+});
+
+$(document).on('click', '.btn-note-edit', function () {
+    var entity = JSON.parse($(this).attr('data-entity'));
+    // Fill modal
+    $("#update-note [name='id']").val(entity.id);
+    $("#update-note [name='title']").val(entity.title);
+    $("#update-note [name='content']").val(entity.content);
+    // Open modal
+    $('#note-update-modal').modal('show');
+});
+
+$(document).on('click', '.btn-note-delete', function () {
+    var entity_id = $(this).attr('data-entity-id');
+
+    __WEBPACK_IMPORTED_MODULE_2_sweetalert___default()({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover this note!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+    }).then(function (willDelete) {
+        if (willDelete) {
+            __WEBPACK_IMPORTED_MODULE_0__helper_js__["a" /* default */].startLoading();
+            axios.delete(base_api + '/notes/' + entity_id).then(function (response) {
+                $("#container-note-" + entity_id).remove();
+                __WEBPACK_IMPORTED_MODULE_0__helper_js__["a" /* default */].endLoading();
+            }).catch(function (error) {
+                console.log(error);
+                __WEBPACK_IMPORTED_MODULE_0__helper_js__["a" /* default */].endLoading();
+            });
+        }
+    });
 });
 
 /***/ })

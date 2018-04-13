@@ -52,7 +52,9 @@ class NoteController extends ApiController
 
         $entity->update($request->all());
 
-        return $this->respond(["message" => self::MODEL_NAME. " updated successfully"]);
+        $entities = $model::where($request->only('entity_id','entity_id'))->get();
+
+        return $this->respond(["message" => self::MODEL_NAME. " updated successfully", "data" => view('components/notes_list', ['entities' => $entities])->render()]);
     }
 
     public function delete(Request $request, $id)

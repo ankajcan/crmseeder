@@ -1,12 +1,13 @@
 <div class="modal inmodal" id="note-update-modal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
-        <div class="modal-content animated">
+        <div class="modal-content animated fadeIn">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
                 <h4 class="modal-title">Add Note</h4>
             </div>
             <div class="modal-body">
                 <form id="update-note">
+                    <input type="hidden" name="id" value="" />
                     <input type="hidden" name="entity_id" value="{{ $entity->id }}" />
                     <input type="hidden" name="entity_type" value="{{ get_class($entity) }}" />
                     <div class="form-group" data-error="title">

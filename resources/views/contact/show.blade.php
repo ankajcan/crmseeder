@@ -180,7 +180,7 @@
                                     <div class="col-sm-12">
                                         <h3>
                                             Notes
-                                            <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#note-update-modal"> <i class="fa fa-plus"></i> Add </a>
+                                            <a id="btn-note-add" class="btn btn-success btn-sm"> <i class="fa fa-plus"></i> Add </a>
                                         </h3>
                                         <div class="notes-container">
                                             @include('components/notes_list',['entities' => $entity->notes])
