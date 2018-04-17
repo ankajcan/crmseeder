@@ -28,6 +28,11 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/dashboard', 'Web\PageController@dashboard')->name('dashboard');
 
+    Route::get('/account', 'Web\AccountController@show')->name('account.show');
+    Route::put('/account/update', 'Web\AccountController@update');
+    Route::post('/account/avatar-upload', 'Web\AccountController@avatar_upload');
+
+
     Route::get('/users/search', 'Web\UserController@search');
     Route::get('/users/{id}', 'Web\UserController@show')->name('user.show');
     Route::get('/users', 'Web\UserController@index')->name('user.index');

@@ -22,6 +22,7 @@ $("#update-entity").submit(function( event ) {
                 errors.record(error.response.data.details);
                 errors.show();
                 Helper.endLoading();
+                toastr.error('Something went wrong')
             });
     } else { // NEW USER
         axios.post(base_api +'/users', data)
@@ -32,6 +33,7 @@ $("#update-entity").submit(function( event ) {
                 errors.record(error.response.data.details);
                 errors.show();
                 Helper.endLoading();
+                toastr.error('Something went wrong')
             });
     }
 
@@ -60,6 +62,7 @@ $("#btn-delete-entity").on('click', function(evt) {
                 })
                 .catch(function (error) {
                     console.log(error);
+                    toastr.error('Something went wrong')
                 });
         }
     });
@@ -95,6 +98,7 @@ $("#input-avatar-upload").on('change', function(evt) {
         }).catch(function (error) {
             console.log(error);
             Helper.endLoading();
+            toastr.error('Something went wrong')
     })
 
 });

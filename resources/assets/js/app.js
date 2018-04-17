@@ -1,7 +1,9 @@
 window.base_api = '';
 require('./main');
 
-console.log(route);
+if(['account.show'].includes(route)) {
+    require('./account');
+}
 
 if(['user.index','user.show'].includes(route)) {
     require('./user');
