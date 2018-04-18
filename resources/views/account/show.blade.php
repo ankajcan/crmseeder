@@ -64,7 +64,7 @@
                             <hr>
                             <div class="row">
                                 <div class="col-sm-6 col-xs-12">
-                                    <button type="submit" class="btn btn-primary pull-right">Save</button>
+                                    <button type="submit" class="btn btn-primary">Save</button>
                                 </div>
                             </div>
                         </form>

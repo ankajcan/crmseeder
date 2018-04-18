@@ -56,6 +56,18 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('notes/{id}', 'Web\NoteController@update');
     Route::delete('notes/{id}', 'Web\NoteController@delete');
 
+    Route::get('/roles/{id}', 'Web\RoleController@show')->name('role.show');
+    Route::get('/roles', 'Web\RoleController@index')->name('role.index');
+    Route::post('roles', 'Web\RoleController@store');
+    Route::put('roles/{id}', 'Web\RoleController@update');
+    Route::delete('roles/{id}', 'Web\RoleController@delete');
+
+    Route::get('/permissions/{id}', 'Web\PermissionController@show')->name('permission.show');
+    Route::get('/permissions', 'Web\PermissionController@index')->name('permission.index');
+    Route::post('permissions', 'Web\PermissionController@store');
+    Route::put('permissions/{id}', 'Web\PermissionController@update');
+    Route::delete('permissions/{id}', 'Web\PermissionController@delete');
+
     Route::get('/logout', 'Auth\AuthController@logout')->name('logout');
 
 });

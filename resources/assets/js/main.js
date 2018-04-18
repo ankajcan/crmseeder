@@ -1,6 +1,7 @@
 import Helper from './helper.js';
 import Errors from './classes/Errors';
 let errors = new Errors();
+let preventable = false;
 
 // LOGIN
 $( "#login-form" ).submit(function( event ) {
@@ -76,6 +77,23 @@ $('#login-modal').on('shown.bs.modal', function (e) {
 $('#sign-up-modal').on('shown.bs.modal', function (e) {
     errors.clear();
 });
+
+/**
+ * Clickable element
+ */
+$(document).on('click', '.clickable-row', function(){
+    if(!preventable) {
+        window.document.location = $(this).data("href");
+    }
+});
+
+$(document).on('click', '.preventable', function(){
+    preventable = true;
+    setTimeout(function(){
+        preventable = false;
+    }, 100);
+});
+
 
 
 

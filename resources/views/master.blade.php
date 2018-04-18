@@ -35,6 +35,13 @@
                 <li class="@if(Route::current()->getName() == 'user.index') active @endif">
                     <a href="{{ route('user.index') }}"><i class="fa fa-users"></i> <span class="nav-label">Users</span></a>
                 </li>
+                <li class="">
+                    <a href=""><i class="fa fa-wrench" aria-hidden="true"></i> <span class="nav-label">Settings</span> <span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse" style="height: 0px;">
+                        <li><a href="{{ route('role.index') }}">Roles</a></li>
+                        <li><a href="{{ route('permission.index') }}">Permissions</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </nav>

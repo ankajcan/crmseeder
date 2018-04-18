@@ -13,5 +13,13 @@ if(['contact.index','contact.show'].includes(route)) {
     require('./contact');
 }
 
+if(['role.index','role.show'].includes(route)) {
+    require('./role');
+}
+
+if(['permission.index','permission.show'].includes(route)) {
+    require('./permission');
+}
+
 
 

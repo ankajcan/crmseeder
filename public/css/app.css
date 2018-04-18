@@ -98,6 +98,24 @@
   color: grey;
 }
 
+/**
+ * Entity row hover buttons
+ */
+
+.entity-row .action button,
+.entity-row .action a {
+  visibility: hidden;
+  -webkit-transition-property: none;
+  transition-property: none;
+}
+
+.entity-row:hover .action button,
+.entity-row:hover .action a {
+  visibility: visible;
+  -webkit-transition-property: none;
+  transition-property: none;
+}
+
 .item-container .image-box {
   min-height: 200px;
   padding: 0;
@@ -119,5 +137,19 @@
   height: 150px;
   background-size: cover;
   background-position: 50% 50%;
+}
+
+.role-row .action button,
+.role-row .action a {
+  visibility: hidden;
+  -webkit-transition-property: none;
+  transition-property: none;
+}
+
+.role-row:hover .action button,
+.role-row:hover .action a {
+  visibility: visible;
+  -webkit-transition-property: none;
+  transition-property: none;
 }
 

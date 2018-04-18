@@ -1,0 +1,20 @@
+.role-row {
+  .action button, .action a  {
+    visibility: hidden;
+    -webkit-transition-property: none;
+    -moz-transition-property: none;
+    -o-transition-property: none;
+    transition-property: none;
+  }
+
+  &:hover{
+    .action button, .action a {
+      visibility: visible;
+      -webkit-transition-property: none;
+      -moz-transition-property: none;
+      -o-transition-property: none;
+      transition-property: none;
+    }
+  }
+
+}
