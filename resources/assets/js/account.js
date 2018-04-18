@@ -29,14 +29,16 @@ $("#update-entity").submit(function( event ) {
 /**
  * Open user avatar upload dialog
  */
-$("#btn-avatar-upload").on('click', function(evt) {
+$(document).on('click', '#btn-avatar-upload', function(){
     $("#input-avatar-upload").click();
 });
+
+
 
 /**
  * Upload user avatar
  */
-$("#input-avatar-upload").on('change', function(evt) {
+$(document).on('change', '#input-avatar-upload', function(evt){
     let files = evt.target.files;
     let formData = new FormData();
     formData.append('file',files[0]);
@@ -56,5 +58,21 @@ $("#input-avatar-upload").on('change', function(evt) {
         Helper.endLoading();
         toastr.error('Something went wrong')
     })
+});
 
+/**
+ * Delete user avatar
+ */
+
+$(document).on('click', '#btn-avatar-delete', function(){
+    Helper.startLoading();
+    axios.post(base_api + '/account/avatar-delete', {})
+        .then(response => {
+            $("#avatar-container").html(response.data);
+            Helper.endLoading();
+        }).catch(function (error) {
+        console.log(error);
+        Helper.endLoading();
+        toastr.error('Something went wrong')
+    })
 });

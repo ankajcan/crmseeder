@@ -25,11 +25,16 @@
             <div class="ibox-content">
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="m-b-md">
-
-                        </div>
                         <form id="update-entity" class="form-horizontal">
                             <input type="hidden" name="id" value="{{ $entity->id }}" >
+                            <div class="form-group">
+                                <div class="col-sm-3 col-xs-6">
+                                    <label class="">Avatar</label>
+                                    <div id="avatar-container">
+                                        @include('account/avatar', ['avatar' => $entity->avatar])
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <div class="col-sm-3" data-error="first_name">
                                     <label class="">First name</label>
@@ -54,15 +59,6 @@
                                     <label>Phone</label>
                                     <input type="text" name="phone" class="form-control" placeholder="Phone" value="{{ $entity->phone }}" />
                                     <p class="text-danger text-left error-content"></p>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="form-group">
-                                <div class="col-sm-6">
-                                    <div id="avatar-container">
-                                        @include('account/avatar', ['avatar' => $entity->avatar])
-                                    </div>
-                                    <a id="btn-avatar-upload" class="btn btn-success btn-sm" @click="openUploadDialog"> Upload Photo</a>
                                 </div>
                             </div>
                             <hr>

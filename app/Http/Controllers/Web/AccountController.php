@@ -7,6 +7,7 @@ use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Project\Services\AwsService;
 use Project\Services\FileService;
 
 
@@ -34,7 +35,6 @@ class AccountController extends ApiController
 
         $entity = User::find(Auth::id());
 
-        // Upload to AWS
         $response = $entity->uploadAvatar($file);
 
         if(!$response["status"]) {
@@ -44,6 +44,18 @@ class AccountController extends ApiController
         $uploadedFile = $response['data'];
 
         return $this->respond(view('account/avatar', ['avatar' => $uploadedFile])->render());
+    }
+
+    public function avatar_delete(Request $request)
+    {
+
+        $entity = User::find(Auth::id());
+
+        AwsService::removeFromS3($entity->avatar->path);
+
+        $entity->avatar->delete();
+
+        return $this->respond(view('account/avatar', ['avatar' => null])->render());
     }
 
     /*

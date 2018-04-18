@@ -64,9 +64,10 @@ class FileService {
 
     public static function resizeImage($filePath, $options = [])
     {
+        $size = isset($options['size']) ? $options['size'] : 960;
 
         $manager = new ImageManager(array('driver' => 'gd'));
-        $img = $manager->make($filePath)->resize(960, null, function ($constraint) {
+        $img = $manager->make($filePath)->resize($size, null, function ($constraint) {
             $constraint->aspectRatio();
         });
 

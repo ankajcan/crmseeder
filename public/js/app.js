@@ -844,14 +844,14 @@ $("#update-entity").submit(function (event) {
 /**
  * Open user avatar upload dialog
  */
-$("#btn-avatar-upload").on('click', function (evt) {
+$(document).on('click', '#btn-avatar-upload', function () {
     $("#input-avatar-upload").click();
 });
 
 /**
  * Upload user avatar
  */
-$("#input-avatar-upload").on('change', function (evt) {
+$(document).on('change', '#input-avatar-upload', function (evt) {
     var files = evt.target.files;
     var formData = new FormData();
     formData.append('file', files[0]);
@@ -863,6 +863,22 @@ $("#input-avatar-upload").on('change', function (evt) {
     __WEBPACK_IMPORTED_MODULE_0__helper_js__["a" /* default */].startLoading();
     axios.post(base_api + '/account/avatar-upload', formData, config).then(function (response) {
         console.log(response.data);
+        $("#avatar-container").html(response.data);
+        __WEBPACK_IMPORTED_MODULE_0__helper_js__["a" /* default */].endLoading();
+    }).catch(function (error) {
+        console.log(error);
+        __WEBPACK_IMPORTED_MODULE_0__helper_js__["a" /* default */].endLoading();
+        toastr.error('Something went wrong');
+    });
+});
+
+/**
+ * Delete user avatar
+ */
+
+$(document).on('click', '#btn-avatar-delete', function () {
+    __WEBPACK_IMPORTED_MODULE_0__helper_js__["a" /* default */].startLoading();
+    axios.post(base_api + '/account/avatar-delete', {}).then(function (response) {
         $("#avatar-container").html(response.data);
         __WEBPACK_IMPORTED_MODULE_0__helper_js__["a" /* default */].endLoading();
     }).catch(function (error) {

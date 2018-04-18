@@ -31,6 +31,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/account', 'Web\AccountController@show')->name('account.show');
     Route::put('/account/update', 'Web\AccountController@update');
     Route::post('/account/avatar-upload', 'Web\AccountController@avatar_upload');
+    Route::post('/account/avatar-delete', 'Web\AccountController@avatar_delete');
 
 
     Route::get('/users/search', 'Web\UserController@search');

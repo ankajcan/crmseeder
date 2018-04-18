@@ -120,24 +120,25 @@ class User extends Model implements AuthenticatableContract,AuthorizableContract
     {
         if($filePath == "") { return false; }
 
+        // RESIZE IMAGE
+        $filePath = FileService::resizeImage($filePath, ["size" => 250]);
+
+        // UPLOAD TO S3
         $filename = FileService::getFileNameFromPath($filePath);
         $key = 'users/' . $this->id . '/' . $filename;
 
         $result = AwsService::uploadToS3($key,$filePath);
-
         if(!$result["status"]) {
             return  $result;
         }
 
         // REMOVE CURRENT AVATAR
-
         if($this->avatar) {
-
             AwsService::removeFromS3($this->avatar->path);
-
             $this->avatar->delete();
         }
 
+        // CREATE NEW ENTITY
         $newFile = new Asset([
             'name' => $filename,
             'path' => $key,

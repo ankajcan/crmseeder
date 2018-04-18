@@ -115,7 +115,8 @@
  Avatar Container
  */
 
-.avatar-container .image {
+.avatar-container .image-container {
+  height: 150px;
   background-size: cover;
   background-position: 50% 50%;
 }
