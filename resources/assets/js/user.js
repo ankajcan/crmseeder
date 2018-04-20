@@ -178,3 +178,26 @@ function bindEvents() {
 }
 
 bindEvents();
+
+
+/**
+ * Invite user
+ */
+$("#invite-entity").submit(function( event ) {
+    errors.clear();
+    let data = Helper.getFormResults(this);
+    Helper.startLoading();
+
+    axios.post(base_api +'/users/invite', data)
+        .then(function (response) {
+            window.location.href = '/users';
+        })
+        .catch(function (error) {
+            errors.record(error.response.data.details);
+            errors.show();
+            Helper.endLoading();
+            toastr.error('Something went wrong')
+        });
+
+    event.preventDefault();
+});

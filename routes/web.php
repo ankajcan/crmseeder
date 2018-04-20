@@ -14,7 +14,12 @@
 Route::get('/', 'Web\PageController@home')->name('home');
 Route::get('/login', 'Web\PageController@login')->name('login');
 Route::get('/register', 'Web\PageController@register')->name('register');
-Route::get('/register/confirmation/{code}', 'Auth\AuthController@confirmation')->name('confirmation');
+
+Route::get('/confirmation/{code}', 'Auth\AuthController@confirmation')->name('confirmation');
+Route::get('/invitation/{invitation}', 'Auth\AuthController@invitation')->name('invitation');
+Route::post('/invitation/{invitation}/accept', 'Auth\AuthController@invitation_accept')->name('invitation.accept');
+
+
 Route::get('/password/reset/{token}', 'Auth\ResetPasswordController@resetPasswordForm')->name('password.reset');
 Route::get('/password/reset', 'Auth\ForgotPasswordController@linkRequestForm')->name('password.request');
 
@@ -35,8 +40,10 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     Route::get('/users/search', 'Web\UserController@search');
+    Route::get('/users/invite', 'Web\UserController@invitation')->name('user.invite');
     Route::get('/users/{id}', 'Web\UserController@show')->name('user.show');
     Route::get('/users', 'Web\UserController@index')->name('user.index');
+    Route::post('users/invite', 'Web\UserController@invite');
     Route::post('users', 'Web\UserController@store');
     Route::put('users/{id}', 'Web\UserController@update');
     Route::delete('users/{id}', 'Web\UserController@delete');

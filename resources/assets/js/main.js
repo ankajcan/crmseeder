@@ -70,6 +70,29 @@ $( "#sign-up-form" ).submit(function( event ) {
 
 });
 
+// INVITATION
+$("#invitation-form").submit(function( event ) {
+    Helper.startLoading();
+    errors.clear();
+    let data = Helper.getFormResults(this);
+
+    axios.post(base_api + '/invitation/' + data['invitation'] + '/accept', data)
+        .then(function (response) {
+            Helper.endLoading();
+            window.location.href = '/login';
+        })
+        .catch(function (error) {
+            Helper.endLoading();
+            errors.record(error.response.data.details);
+            errors.show();
+
+            console.log(errors);
+        });
+    event.preventDefault();
+});
+
+
+
 $('#login-modal').on('shown.bs.modal', function (e) {
     errors.clear();
 });

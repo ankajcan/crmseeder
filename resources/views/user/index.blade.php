@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row wrapper border-bottom white-bg page-heading list-page-header">
-        <div class="col-lg-10">
+        <div class="col-lg-8">
             <h2>Users</h2>
             <ol class="breadcrumb">
                 <li>
@@ -13,8 +13,14 @@
                 </li>
             </ol>
         </div>
-        <div class="col-lg-2 pos-rel">
-            <a href="{{ route('user.show', ['id' => 'new']) }}" type="button" class="btn btn-primary pull-right btn-new-entity">New User</a>
+        <div class="col-lg-4 pos-rel">
+            <div class="row action-btn-container">
+                <div class="col-xs-12">
+                    <a href="{{ route('user.show', ['id' => 'new']) }}" type="button" class="btn btn-primary pull-right">New User</a>
+
+                    <a href="{{ route('user.invite') }}" type="button" class="btn btn-success pull-right m-r-md">Invite User</a>
+                </div>
+            </div>
         </div>
     </div>
     <div class="row">

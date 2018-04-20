@@ -73,9 +73,10 @@
   display: -ms-flexbox;
   display: flex;
 
-  .btn-new-entity {
+  .action-btn-container {
     position: absolute;
     bottom: 2px;
+    width: 100%;
   }
 
 }

@@ -2,10 +2,11 @@
 
 namespace App\Providers;
 
+use App\Events\UserInvited;
 use App\Events\UserRegistered;
 use App\Listeners\SendUserAccountConfirmationEmail;
+use App\Listeners\SendUserInvitationEmail;
 use App\Listeners\SendUserWelcomeEmail;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -19,8 +20,10 @@ class EventServiceProvider extends ServiceProvider
         UserRegistered::class => [
             SendUserWelcomeEmail::class,
             SendUserAccountConfirmationEmail::class
+        ],
+        UserInvited::class => [
+            SendUserInvitationEmail::class
         ]
-
     ];
 
     /**

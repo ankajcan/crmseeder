@@ -1,7 +1,7 @@
 @extends('emails/master_email')
 
 @section('title')
-    <title>Email Confirmation</title>
+    <title>Invitation</title>
 @endsection
 
 @section('preheader')
@@ -17,7 +17,7 @@
                     <tr>
                         <td>
                             <p>Hello,</p>
-                            <p>Thank you for using Brand. Please click on button bellow to confirm your email address.</p>
+                            <p>You've been invited to join CRM Seeder. Please click on the button bellow to accept your invitation.</p>
                             <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                                 <tbody>
                                 <tr>
@@ -25,7 +25,7 @@
                                         <table border="0" cellpadding="0" cellspacing="0">
                                             <tbody>
                                             <tr>
-                                                <td> <a href="{{ route('confirmation',['confirmation'=> $user->confirmation]) }}" target="_blank">Confirm</a> </td>
+                                                <td> <a href="{{ route('invitation',['invitation'=> $user->invitation]) }}" target="_blank">Accept</a> </td>
                                             </tr>
                                             </tbody>
                                         </table>

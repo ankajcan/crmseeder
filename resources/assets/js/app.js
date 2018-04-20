@@ -5,7 +5,7 @@ if(['account.show'].includes(route)) {
     require('./account');
 }
 
-if(['user.index','user.show'].includes(route)) {
+if(['user.index','user.show','user.invite'].includes(route)) {
     require('./user');
 }
 

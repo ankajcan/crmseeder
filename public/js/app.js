@@ -719,7 +719,7 @@ if (['account.show'].includes(route)) {
     __webpack_require__(39);
 }
 
-if (['user.index', 'user.show'].includes(route)) {
+if (['user.index', 'user.show', 'user.invite'].includes(route)) {
     __webpack_require__(41);
 }
 
@@ -803,6 +803,25 @@ $("#sign-up-form").submit(function (event) {
         console.log(errors);
     });
 
+    event.preventDefault();
+});
+
+// INVITATION
+$("#invitation-form").submit(function (event) {
+    __WEBPACK_IMPORTED_MODULE_0__helper_js__["a" /* default */].startLoading();
+    errors.clear();
+    var data = __WEBPACK_IMPORTED_MODULE_0__helper_js__["a" /* default */].getFormResults(this);
+
+    axios.post(base_api + '/invitation/' + data['invitation'] + '/accept', data).then(function (response) {
+        __WEBPACK_IMPORTED_MODULE_0__helper_js__["a" /* default */].endLoading();
+        window.location.href = '/login';
+    }).catch(function (error) {
+        __WEBPACK_IMPORTED_MODULE_0__helper_js__["a" /* default */].endLoading();
+        errors.record(error.response.data.details);
+        errors.show();
+
+        console.log(errors);
+    });
     event.preventDefault();
 });
 
@@ -1288,6 +1307,26 @@ function bindEvents() {
 }
 
 bindEvents();
+
+/**
+ * Invite user
+ */
+$("#invite-entity").submit(function (event) {
+    errors.clear();
+    var data = __WEBPACK_IMPORTED_MODULE_0__helper_js__["a" /* default */].getFormResults(this);
+    __WEBPACK_IMPORTED_MODULE_0__helper_js__["a" /* default */].startLoading();
+
+    axios.post(base_api + '/users/invite', data).then(function (response) {
+        window.location.href = '/users';
+    }).catch(function (error) {
+        errors.record(error.response.data.details);
+        errors.show();
+        __WEBPACK_IMPORTED_MODULE_0__helper_js__["a" /* default */].endLoading();
+        toastr.error('Something went wrong');
+    });
+
+    event.preventDefault();
+});
 
 /***/ }),
 /* 42 */

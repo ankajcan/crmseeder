@@ -27,6 +27,11 @@ class User extends Model implements AuthenticatableContract,AuthorizableContract
 {
     use Authenticatable, Authorizable, HasRoles, ResetPassword, Notifiable;
 
+    const STATUS_ACTIVE = 1; // login
+    const STATUS_INVITED = 2; // require to accept invitation
+    const STATUS_REGISTERED = 3; // required confirmation
+    const STATUS_DISABLED = 4; // disabled
+
     /**
      * The database table used by the model.
      *
@@ -39,7 +44,7 @@ class User extends Model implements AuthenticatableContract,AuthorizableContract
      *
      * @var array
      */
-    protected $fillable = ['username', 'first_name', 'last_name', 'email', 'password', 'facebook_id','confirmation_code', 'phone'];
+    protected $fillable = ['username', 'first_name', 'last_name', 'email', 'password', 'facebook_id','confirmation', 'phone', 'invitation', 'status'];
 
     /**
      * The attributes excluded from the model's JSON form.

@@ -21,9 +21,9 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('phone')->nullable();
             $table->string('facebook_id')->nullable();
-            $table->boolean('confirmed')->default(0);
-            $table->string('confirmation_code')->nullable();
-            $table->boolean('enabled')->default(1);
+            $table->string('confirmation')->nullable();
+            $table->string('invitation')->nullable();
+            $table->integer('status')->default(\App\Models\User::STATUS_ACTIVE);
             $table->rememberToken();
             $table->timestamps();
         });

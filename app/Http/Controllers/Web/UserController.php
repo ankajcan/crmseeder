@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Events\UserInvited;
 use App\Http\Controllers\ApiController;
+use App\Http\Requests\UserInviteRequest;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Http\Transformers\UserTransformer;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 
 class UserController extends ApiController
@@ -68,6 +71,20 @@ class UserController extends ApiController
         return $this->respond(["message" => self::MODEL_NAME. "  deleted successfully"]);
     }
 
+    public function invite(UserInviteRequest $request)
+    {
+        $model = self::MODEL_CLASS;
+
+        $entity = $model::create(array_merge($request->all(),['invitation' => str_random(30), 'status' => User::STATUS_INVITED, 'password' => Hash::make(str_random(30))]));
+        $entity->save();
+
+        $entity->syncRoles($request->has('roles') ? $request->get('roles') : []);
+
+        event(new UserInvited($entity));
+
+        return $this->respond(["message" => self::MODEL_NAME. " invited successfully"]);
+    }
+
     public function avatarUpload(Request $request)
     {
         $response = app(self::MODEL_CLASS)->saveAvatar($request->files->get('file'));
@@ -113,6 +130,15 @@ class UserController extends ApiController
         $entity = $id == "new" ? new $model() : $model::find($id);
 
         return view(self::MODEL_TEMPLATE_PATH.'/show', ["entity" => $entity]);
+    }
+
+    public function invitation(Request $request)
+    {
+        $model = self::MODEL_CLASS;
+
+        $entity = new $model();
+
+        return view(self::MODEL_TEMPLATE_PATH.'/invite', ["entity" => $entity]);
     }
 
 }

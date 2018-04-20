@@ -75,9 +75,10 @@
   display: flex;
 }
 
-.list-page-header .btn-new-entity {
+.list-page-header .action-btn-container {
   position: absolute;
   bottom: 2px;
+  width: 100%;
 }
 
 /**
