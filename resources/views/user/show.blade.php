@@ -42,63 +42,62 @@
                         <form id="update-entity" class="form-horizontal">
                             @if($entity->id)
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">ID</label>
+                                    <label class="col-sm-1 form-control-static">ID</label>
                                     <div class="col-sm-10">
                                         <p class="form-control-static">{{ $entity->id }}</p>
                                         <input type="hidden" name="id" value="{{ $entity->id }}" >
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="col-sm-1 form-control-static">Created</label>
+                                    <div class="col-sm-10">
+                                        <p class="form-control-static">{{ Carbon\Carbon::parse($entity->created_at)->format('m/d/Y') }}</p>
+                                    </div>
+                                </div>
                             @endif
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">Name</label>
                                 <div class="col-sm-3" data-error="first_name">
+                                    <label class="">First name</label>
                                     <input type="text" name="first_name" class="form-control" placeholder="First name" required value="{{ $entity->first_name }}" />
                                     <p class="text-danger text-left error-content"></p>
                                 </div>
                                 <div class="col-sm-3" data-error="last_name">
+                                    <label class="">Last name</label>
                                     <input type="text" name="last_name" class="form-control" placeholder="Last name" required value="{{ $entity->last_name }}" />
                                     <p class="text-danger text-left error-content"></p>
                                 </div>
                             </div>
                             <div class="form-group" data-error="email">
-                                <label class="col-sm-2 control-label">Email</label>
                                 <div class="col-sm-6">
+                                    <label class="">Email</label>
                                     <input type="email" name="email" class="form-control" placeholder="Email" required value="{{ $entity->email }}" />
                                     <p class="text-danger text-left error-content"></p>
                                 </div>
                             </div>
                             @if(!$entity->id)
                                 <div class="form-group" data-error="password">
-                                    <label class="col-sm-2 control-label">Password</label>
                                     <div class="col-sm-6">
+                                        <label class="">Password</label>
                                         <input type="password" class="form-control" required  name="password" placeholder="Choose a Password">
                                         <p class="text-danger text-left error-content"></p>
                                     </div>
                                 </div>
                                 <div class="form-group" data-error="password_confirm">
-                                    <label class="col-sm-2 control-label">Password repeat</label>
                                     <div class="col-sm-6">
+                                        <label class="">Password repeat</label>
                                         <input type="password" class="form-control" required  name="password_confirm" placeholder="Repeat Password">
                                         <p class="text-danger text-left error-content"></p>
                                     </div>
                                 </div>
                             @endif
-                            @if($entity->id)
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Created</label>
-                                    <div class="col-sm-10">
-                                        <p class="form-control-static">{{ Carbon\Carbon::parse($entity->created_at)->format('m/d/Y') }}</p>
-
-                                    </div>
-                                </div>
-                            @endif
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">Roles</label>
                                 <div class="col-sm-10">
+                                    <label class="">Roles</label><br>
                                     @foreach(\Spatie\Permission\Models\Role::all() as $role)
-                                        <label class="checkbox-inline">
-                                            <input name="roles[]" type="checkbox" @if($entity->hasRole($role->name)) checked @endif value="{{ $role->name }}" id=""> {{ $role->name }}
-                                        </label>
+                                        <div class="checkbox checkbox-inline">
+                                            <input id="role-{{ $role->id }}" name="roles[]" type="checkbox" @if($entity->hasRole($role->name)) checked @endif value="{{ $role->name }}" >
+                                            <label for="role-{{ $role->id }}"> {{ $role->name }} </label>
+                                        </div>
                                     @endforeach
                                 </div>
                             </div>

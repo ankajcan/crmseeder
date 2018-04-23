@@ -2,17 +2,18 @@
     <table class="table table-hover">
         <thead>
         <tr>
-            <th>ID</th>
+            <th>#</th>
             <th>Name</th>
             <th>Email</th>
             <th>Roles</th>
+            <th>Status</th>
             <th></th>
         </tr>
         </thead>
         <tbody>
-        @foreach($entities as $entity)
-            <tr>
-                <td>{{ $entity->id }}</td>
+        @foreach($entities as $key => $entity)
+            <tr class="entity-row clickable-row cursor-pointer" data-href="{{ route('user.show', ['id' => $entity->id]) }}">
+                <td>{{ $key+1 }}</td>
                 <td>{{ $entity->first_name }} {{ $entity->last_name }}</td>
                 <td>{{ $entity->email }}</td>
                 <td>
@@ -20,8 +21,9 @@
                         <span class="label">{{ $role->name }}</span>
                     @endforeach
                 </td>
-                <td>
-                    <a href="{{ route('user.show', ['id' => $entity->id]) }}" type="button" class="btn btn-xs btn-success">Edit</a>
+                <td>{{ $entity->status_text }}</td>
+                <td class="action">
+                    <a href="{{ route('user.show', ['id' => $entity->id]) }}" class="btn btn-outline btn-sm btn-success">Edit</a>
                 </td>
             </tr>
         @endforeach

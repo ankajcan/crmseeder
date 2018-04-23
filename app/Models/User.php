@@ -75,6 +75,18 @@ class User extends Model implements AuthenticatableContract,AuthorizableContract
         $this->attributes['username'] = $value ? $value : $this->first_name." ".$this->last_name;
     }
 
+    public function getStatusTextAttribute()
+    {
+        $statuses = [
+            self::STATUS_ACTIVE => "Active",
+            self::STATUS_INVITED => "Invited",
+            self::STATUS_REGISTERED => "Registered",
+            self::STATUS_DISABLED => "Disabled",
+        ];
+
+        return isset($statuses[$this->status]) ? $statuses[$this->status] : '';
+    }
+
     /*
     |--------------------------------------------------------------------------
     | DOMAIN METHODS
