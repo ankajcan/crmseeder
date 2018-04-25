@@ -61,6 +61,12 @@
                                     <p class="text-danger text-left error-content"></p>
                                 </div>
                             </div>
+                            <div class="form-group" >
+                                <div class="col-sm-6">
+                                    <label>Password</label><br>
+                                    <a href="{{ route('password.request') }}">Change password</a>
+                                </div>
+                            </div>
                             <hr>
                             <div class="row">
                                 <div class="col-sm-6 col-xs-12">

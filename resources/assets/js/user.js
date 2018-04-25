@@ -3,7 +3,6 @@ import Helper from './helper.js';
 import Errors from './classes/Errors';
 import swal from 'sweetalert';
 let errors = new Errors();
-let preventable = false;
 
 /**
  * Update/create user
@@ -70,40 +69,6 @@ $("#btn-delete-entity").on('click', function(evt) {
 });
 
 /**
- * Open user avatar upload dialog
- */
-$("#btn-avatar-upload").on('click', function(evt) {
-    $("#input-avatar-upload").click();
-});
-
-/**
- * Upload user avatar
- */
-$("#input-avatar-upload").on('change', function(evt) {
-    let files = evt.target.files;
-    let formData = new FormData();
-    formData.append('file',files[0]);
-    let config = {
-        headers: {
-            'content-type': 'multipart/form-data'
-        }
-    };
-    Helper.startLoading();
-    axios.post(base_api + '/users/avatar-upload', formData, config)
-        .then(response => {
-            console.log(response.data);
-            $("#img-entity-avatar").attr("src","/"+response.data);
-            $("#input-entity-avatar").val(response.data);
-            Helper.endLoading();
-        }).catch(function (error) {
-            console.log(error);
-            Helper.endLoading();
-            toastr.error('Something went wrong')
-    })
-
-});
-
-/**
  * Search
  */
 let inputTypingTimer;
@@ -127,7 +92,6 @@ $("#search-form").submit(function( event ) {
     axios.get(base_api + '/users/search?'+query)
         .then(function (response) {
             $('.list-container').html(response.data);
-            bindEvents();
             Helper.endLoading();
         })
         .catch(function (error) {
@@ -151,33 +115,15 @@ function updatePage(page) {
 }
 
 /**
- * Events
+ * Pagination
  */
-function bindEvents() {
-    $('ul.pagination a').on('click', function (event) {
-        updatePage($(this).attr('data-page'));
-        submitSearchForm();
+$(document).on('click', 'ul.pagination a', function(event){
+    updatePage($(this).attr('data-page'));
+    submitSearchForm();
 
-        event.preventDefault();
-    });
+    event.preventDefault();
+});
 
-    // Clickable Element
-    $(".clickable-row").click(function() {
-        if(!preventable) {
-            window.document.location = $(this).data("href");
-        }
-    });
-
-    $(".preventable").click(function(event) {
-        preventable = true;
-        setTimeout(function(){
-            preventable = false;
-        }, 100);
-
-    });
-}
-
-bindEvents();
 
 
 /**

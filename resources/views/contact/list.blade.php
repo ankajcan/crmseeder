@@ -18,9 +18,9 @@
         </thead>
         <tbody>
         @foreach($entities as $entity)
-            <tr data-href="{{ route('contact.show', ['id' => $entity->id]) }}" class="clickable-row cursor-pointer">
+            <tr class="entity-row">
                 <td>
-                    <div class="checkbox checkbox-inline preventable">
+                    <div class="checkbox checkbox-inline">
                         <input type="checkbox">
                         <label>&nbsp;</label>
                     </div>
@@ -28,8 +28,8 @@
                 <td>{{ $entity->full_name }}</td>
                 <td>{{ $entity->email }}</td>
                 <td>{{ $entity->phone }}</td>
-                <td>
-
+                <td class="action">
+                    <a href="{{ route('contact.show', ['id' => $entity->id]) }}" class="btn btn-outline btn-sm btn-success">Edit</a>
                 </td>
             </tr>
         @endforeach

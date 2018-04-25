@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row wrapper border-bottom white-bg page-heading list-page-header">
-        <div class="col-lg-10">
+        <div class="col-lg-8">
             <h2>Contacts</h2>
             <ol class="breadcrumb">
                 <li>
@@ -13,8 +13,10 @@
                 </li>
             </ol>
         </div>
-        <div class="col-lg-2 pos-rel">
-            <a href="{{ route('contact.show', ['id' => 'new']) }}" type="button" class="btn btn-primary pull-right btn-new-entity">New Contact</a>
+        <div class="col-lg-4 pos-rel">
+            <div class="row action-btn-container">
+                <a href="{{ route('contact.show', ['id' => 'new']) }}" type="button" class="btn btn-primary pull-right btn-new-entity">New Contact</a>
+            </div>
         </div>
     </div>
     <div class="row">

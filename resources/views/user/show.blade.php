@@ -102,25 +102,12 @@
                                 </div>
                             </div>
                             <hr>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Avatar</label>
-                                <div class="col-sm-10">
-                                    @if($entity->avatar)
-                                        <img id="img-entity-avatar" src="{{ $entity->avatar->url }}" class="img-lg"> <br> <br>
-                                    @else
-                                        <img id="img-entity-avatar" src="http://via.placeholder.com/200x200?text=Avatar" class="img-lg"> <br> <br>
-                                    @endif
-                                    <a id="btn-avatar-upload" class="btn btn-success" @click="openUploadDialog"> Upload Photo</a>
-                                    <input type="hidden" id="input-entity-avatar" name="avatar" value="" >
-                                </div>
-                            </div>
-                            <hr>
                             <div class="row">
                                 <div class="col-xs-8">
+                                    <button type="submit" class="btn btn-primary">Save</button>
                                     @if($entity->id)
-                                        <a id="btn-delete-entity" data-entity-id="{{ $entity->id }}" class="btn btn-danger pull-left">Delete</a>
+                                        <a id="btn-delete-entity" data-entity-id="{{ $entity->id }}" class="btn btn-danger btn-outline">Delete</a>
                                     @endif
-                                        <button type="submit" class="btn btn-primary pull-right">Save</button>
                                 </div>
                             </div>
                         </form>

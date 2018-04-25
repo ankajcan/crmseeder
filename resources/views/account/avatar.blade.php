@@ -14,7 +14,7 @@
 @else
     <div class="ibox avatar-container">
         <div class="ibox-content product-box">
-            <div class="image-container" style="background-image:url('http://via.placeholder.com/200x200?text=PHOTO')">
+            <div class="image-container" style="background-image:url('/images/avatar_placeholder.png')">
             </div>
             <div class="product-desc">
                 <div class="m-t text-righ">

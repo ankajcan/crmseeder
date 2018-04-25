@@ -10,7 +10,6 @@ use App\Http\Requests\UserUpdateRequest;
 use App\Http\Transformers\UserTransformer;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -40,9 +39,7 @@ class UserController extends ApiController
         $entity = $model::create($request->all());
         $entity->save();
 
-        $entity->syncRoles($request->get('roles'));
-
-        $entity->uploadAvatar($request->get('avatar'));
+        $entity->syncRoles($request->get('roles') ? $request->get('roles') : []);
 
         return $this->respond(["message" => self::MODEL_NAME. " created successfully"]);
     }
@@ -55,9 +52,7 @@ class UserController extends ApiController
 
         $entity->update($request->all());
 
-        $entity->syncRoles($request->get('roles'));
-
-        $entity->uploadAvatar($request->get('avatar'));
+        $entity->syncRoles($request->get('roles') ? $request->get('roles') : []);
 
         return $this->respond(["message" => self::MODEL_NAME. " updated successfully"]);
     }
@@ -84,19 +79,6 @@ class UserController extends ApiController
 
         return $this->respond(["message" => self::MODEL_NAME. " invited successfully"]);
     }
-
-    public function avatarUpload(Request $request)
-    {
-        $response = app(self::MODEL_CLASS)->saveAvatar($request->files->get('file'));
-
-        if(!$response["status"]) {
-            return $this->setStatusCode(400)->respondWithError($response['message']);
-        }
-
-        return $this->respond($response["data"]);
-    }
-
-
 
 
     /*

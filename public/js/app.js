@@ -1140,7 +1140,6 @@ window.base_api = '';
 
 
 var errors = new __WEBPACK_IMPORTED_MODULE_1__classes_Errors__["a" /* default */]();
-var preventable = false;
 
 /**
  * Update/create user
@@ -1202,38 +1201,6 @@ $("#btn-delete-entity").on('click', function (evt) {
 });
 
 /**
- * Open user avatar upload dialog
- */
-$("#btn-avatar-upload").on('click', function (evt) {
-    $("#input-avatar-upload").click();
-});
-
-/**
- * Upload user avatar
- */
-$("#input-avatar-upload").on('change', function (evt) {
-    var files = evt.target.files;
-    var formData = new FormData();
-    formData.append('file', files[0]);
-    var config = {
-        headers: {
-            'content-type': 'multipart/form-data'
-        }
-    };
-    __WEBPACK_IMPORTED_MODULE_0__helper_js__["a" /* default */].startLoading();
-    axios.post(base_api + '/users/avatar-upload', formData, config).then(function (response) {
-        console.log(response.data);
-        $("#img-entity-avatar").attr("src", "/" + response.data);
-        $("#input-entity-avatar").val(response.data);
-        __WEBPACK_IMPORTED_MODULE_0__helper_js__["a" /* default */].endLoading();
-    }).catch(function (error) {
-        console.log(error);
-        __WEBPACK_IMPORTED_MODULE_0__helper_js__["a" /* default */].endLoading();
-        toastr.error('Something went wrong');
-    });
-});
-
-/**
  * Search
  */
 var inputTypingTimer = void 0;
@@ -1256,7 +1223,6 @@ $("#search-form").submit(function (event) {
 
     axios.get(base_api + '/users/search?' + query).then(function (response) {
         $('.list-container').html(response.data);
-        bindEvents();
         __WEBPACK_IMPORTED_MODULE_0__helper_js__["a" /* default */].endLoading();
     }).catch(function (error) {
         __WEBPACK_IMPORTED_MODULE_0__helper_js__["a" /* default */].endLoading();
@@ -1281,32 +1247,14 @@ function updatePage(page) {
 }
 
 /**
- * Events
+ * Pagination
  */
-function bindEvents() {
-    $('ul.pagination a').on('click', function (event) {
-        updatePage($(this).attr('data-page'));
-        submitSearchForm();
+$(document).on('click', 'ul.pagination a', function (event) {
+    updatePage($(this).attr('data-page'));
+    submitSearchForm();
 
-        event.preventDefault();
-    });
-
-    // Clickable Element
-    $(".clickable-row").click(function () {
-        if (!preventable) {
-            window.document.location = $(this).data("href");
-        }
-    });
-
-    $(".preventable").click(function (event) {
-        preventable = true;
-        setTimeout(function () {
-            preventable = false;
-        }, 100);
-    });
-}
-
-bindEvents();
+    event.preventDefault();
+});
 
 /**
  * Invite user

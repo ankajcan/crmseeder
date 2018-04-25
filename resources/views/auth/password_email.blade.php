@@ -16,7 +16,11 @@
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <div class="col-xs-12">
-                                <input id="email" type="email" placeholder="Email Address" class="form-control" name="email" value="{{ old('email') }}" required>
+                                @if(\Illuminate\Support\Facades\Auth::user())
+                                    <input id="email" type="email" placeholder="Email Address" class="form-control" name="email" value="{{ Illuminate\Support\Facades\Auth::user()->email }}" required>
+                                @else
+                                    <input id="email" type="email" placeholder="Email Address" class="form-control" name="email" value="{{ old('email') }}" required>
+                                @endif
 
                                 @if ($errors->has('email'))
                                     <span class="help-block">
