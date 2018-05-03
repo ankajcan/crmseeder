@@ -23,12 +23,18 @@
         <div class="ibox float-e-margins">
                 <div class="ibox-content">
                     <div class="row m-b-md">
-                        <form id="search-form">
-                            <input type="hidden" name="page" />
-                            <div class="col-sm-3 col-xs-12">
+                        <div class="col-xs-6">
+                            <form id="search-form">
+                                <input type="hidden" name="page" />
                                 <input type="text" placeholder="Search" name="search" class="input-sm form-control" />
+                            </form>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="checkbox-action pull-right hidden">
+                                <span class="bg-muted p-xxs b-r-sm"><span class="selected-entities">0</span> selected</span>
+                                <a id="btn-entities-delete" class="btn btn-sm btn-white m-b-none-i"><i class="fa fa-trash"></i> Delete </a>
                             </div>
-                        </form>
+                        </div>
                     </div>
                     <div class="list-container">
                         @include('contact/list')

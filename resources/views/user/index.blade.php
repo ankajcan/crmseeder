@@ -27,12 +27,15 @@
         <div class="ibox float-e-margins">
                 <div class="ibox-content">
                     <div class="row m-b-md">
-                        <form id="search-form">
-                            <input type="hidden" name="page" />
-                            <div class="col-sm-3 col-xs-12">
+                        <div class="col-xs-6">
+                            <form id="search-form">
+                                <input type="hidden" name="page" />
                                 <input type="text" placeholder="Search" name="search" class="input-sm form-control" />
-                            </div>
-                        </form>
+                            </form>
+                        </div>
+                        <div class="col-xs-6">
+
+                        </div>
                     </div>
                     <div class="list-container">
                         @include('user/list')

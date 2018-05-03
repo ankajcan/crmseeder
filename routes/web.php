@@ -53,9 +53,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/contacts/{id}', 'Web\ContactController@show')->name('contact.show');
     Route::get('/contacts', 'Web\ContactController@index')->name('contact.index');
     Route::post('contacts', 'Web\ContactController@store');
+    Route::put('contacts/delete', 'Web\ContactController@delete_multiple');
     Route::put('contacts/{id}', 'Web\ContactController@update');
     Route::delete('contacts/{id}', 'Web\ContactController@delete');
     Route::post('/contacts/{id}/file-upload', 'Web\ContactController@fileUpload');
+
 
     Route::delete('assets/{id}', 'Web\AssetController@delete');
 

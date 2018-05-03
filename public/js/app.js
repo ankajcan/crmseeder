@@ -1291,7 +1291,6 @@ window.base_api = '';
 
 
 var errors = new __WEBPACK_IMPORTED_MODULE_1__classes_Errors__["a" /* default */]();
-var preventable = false;
 
 /**
  * Update/create user
@@ -1462,7 +1461,6 @@ $("#search-form").submit(function (event) {
 
     axios.get(base_api + '/contacts/search?' + query).then(function (response) {
         $('.list-container').html(response.data);
-        bindEvents();
         __WEBPACK_IMPORTED_MODULE_0__helper_js__["a" /* default */].endLoading();
     }).catch(function (error) {
         __WEBPACK_IMPORTED_MODULE_0__helper_js__["a" /* default */].endLoading();
@@ -1482,37 +1480,87 @@ function submitSearchForm() {
     $("#search-form").submit();
 }
 
+/**
+ * Pagination
+ */
+
 function updatePage(page) {
     $("#search-form input[name='page']").val(page);
 }
 
+$(document).on('click', 'ul.pagination a', function (event) {
+    updatePage($(this).attr('data-page'));
+    submitSearchForm();
+
+    event.preventDefault();
+});
+
 /**
- * Events
+ * Checkbox
  */
-function bindEvents() {
-    $('ul.pagination a').on('click', function (event) {
-        updatePage($(this).attr('data-page'));
-        submitSearchForm();
+var selected_entities = [];
+$(document).on('change', 'input.entity-checkbox', function (event) {
+    updateSelectedEntities();
+});
 
-        event.preventDefault();
-    });
+$(document).on('change', 'input.entity-checkbox-all', function (event) {
 
-    // Clickable Element
-    $(".clickable-row").click(function () {
-        if (!preventable) {
-            window.document.location = $(this).data("href");
+    if ($(this).is(':checked')) {
+        $('input.entity-checkbox').prop('checked', true);
+    } else {
+        $('input.entity-checkbox').prop('checked', false);
+    }
+
+    updateSelectedEntities();
+});
+
+function updateSelectedEntities() {
+    selected_entities = [];
+
+    $('input.entity-checkbox').each(function () {
+        if ($(this).is(':checked')) {
+            selected_entities.push($(this).attr('data-entity-id'));
         }
     });
 
-    $(".preventable").click(function (event) {
-        preventable = true;
-        setTimeout(function () {
-            preventable = false;
-        }, 100);
-    });
+    // UPDATE HTML
+    $('.selected-entities').html(selected_entities.length);
+
+    if (selected_entities.length > 0) {
+        $('.checkbox-action').removeClass('hidden');
+    } else {
+        $('.checkbox-action').addClass('hidden');
+    }
 }
 
-bindEvents();
+/**
+ * Delete selected entities
+ */
+
+$(document).on('click', '#btn-entities-delete', function () {
+
+    console.log(selected_entities);
+
+    __WEBPACK_IMPORTED_MODULE_2_sweetalert___default()({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover selected contacts!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+    }).then(function (willDelete) {
+        if (willDelete) {
+            __WEBPACK_IMPORTED_MODULE_0__helper_js__["a" /* default */].startLoading();
+            axios.put(base_api + '/contacts/delete', { ids: selected_entities }).then(function (response) {
+                // location.reload();
+                __WEBPACK_IMPORTED_MODULE_0__helper_js__["a" /* default */].endLoading();
+            }).catch(function (error) {
+                console.log(error);
+                toastr.error('Something went wrong');
+                __WEBPACK_IMPORTED_MODULE_0__helper_js__["a" /* default */].endLoading();
+            });
+        }
+    });
+});
 
 /**
  * Update/create note

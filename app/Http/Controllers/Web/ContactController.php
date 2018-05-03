@@ -63,6 +63,19 @@ class ContactController extends ApiController
         return $this->respond(["message" => self::MODEL_NAME. "  deleted successfully"]);
     }
 
+    public function delete_multiple(Request $request)
+    {
+        $model = self::MODEL_CLASS;
+
+        $entities = $model::find($request->get('ids'));
+
+        foreach($entities as $entity) {
+            $entity->delete();
+        }
+
+        return $this->respond(["message" => self::MODEL_NAME. "s deleted successfully"]);
+    }
+
     public function fileUpload(Request $request, $id)
     {
         $file = FileService::saveFileLocal($request->files->get('file'));

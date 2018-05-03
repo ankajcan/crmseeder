@@ -4,7 +4,7 @@
         <tr>
             <th>
                 <div class="checkbox checkbox-inline">
-                    <input type="checkbox">
+                    <input type="checkbox" class="entity-checkbox-all">
                     <label>
                         &nbsp;
                     </label>
@@ -21,7 +21,7 @@
             <tr class="entity-row">
                 <td>
                     <div class="checkbox checkbox-inline">
-                        <input type="checkbox">
+                        <input type="checkbox" class="entity-checkbox" data-entity-id="{{ $entity->id }}">
                         <label>&nbsp;</label>
                     </div>
                 </td>

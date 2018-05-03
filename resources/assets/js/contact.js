@@ -3,7 +3,6 @@ import Helper from './helper.js';
 import Errors from './classes/Errors';
 import swal from 'sweetalert';
 let errors = new Errors();
-let preventable = false;
 
 /**
  * Update/create user
@@ -184,7 +183,6 @@ $("#search-form").submit(function( event ) {
     axios.get(base_api + '/contacts/search?'+query)
         .then(function (response) {
             $('.list-container').html(response.data);
-            bindEvents();
             Helper.endLoading();
         })
         .catch(function (error) {
@@ -203,38 +201,93 @@ function submitSearchForm(options = {}) {
     $( "#search-form").submit();
 }
 
+
+/**
+ * Pagination
+ */
+
 function updatePage(page) {
     $("#search-form input[name='page']").val(page);
 }
 
+$(document).on('click', 'ul.pagination a', function(event){
+    updatePage($(this).attr('data-page'));
+    submitSearchForm();
+
+    event.preventDefault();
+});
+
 /**
- * Events
+ * Checkbox
  */
-function bindEvents() {
-    $('ul.pagination a').on('click', function (event) {
-        updatePage($(this).attr('data-page'));
-        submitSearchForm();
+let selected_entities = [];
+$(document).on('change', 'input.entity-checkbox', function(event){
+    updateSelectedEntities();
+});
 
-        event.preventDefault();
-    });
+$(document).on('change', 'input.entity-checkbox-all', function(event){
 
-    // Clickable Element
-    $(".clickable-row").click(function() {
-        if(!preventable) {
-            window.document.location = $(this).data("href");
+    if($(this).is(':checked')) {
+        $('input.entity-checkbox').prop('checked', true);
+    } else {
+        $('input.entity-checkbox').prop('checked', false);
+    }
+
+    updateSelectedEntities();
+
+});
+
+function updateSelectedEntities() {
+    selected_entities = [];
+
+    $('input.entity-checkbox').each(function () {
+        if($(this).is(':checked')) {
+            selected_entities.push($(this).attr('data-entity-id'));
         }
     });
 
-    $(".preventable").click(function(event) {
-        preventable = true;
-        setTimeout(function(){
-            preventable = false;
-        }, 100);
+    // UPDATE HTML
+    $('.selected-entities').html(selected_entities.length);
 
-    });
+    if(selected_entities.length > 0) {
+        $('.checkbox-action').removeClass('hidden');
+    } else {
+        $('.checkbox-action').addClass('hidden');
+    }
 }
 
-bindEvents();
+/**
+ * Delete selected entities
+ */
+
+$(document).on('click', '#btn-entities-delete', function(){
+
+    console.log(selected_entities);
+
+    swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover selected contacts!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                Helper.startLoading();
+                axios.put(base_api + '/contacts/delete', { ids: selected_entities})
+                    .then(response => {
+                        // location.reload();
+                        Helper.endLoading();
+                    }).catch(function (error) {
+                    console.log(error);
+                    toastr.error('Something went wrong');
+                    Helper.endLoading();
+                });
+            }
+        });
+
+});
+
 
 /**
  * Update/create note

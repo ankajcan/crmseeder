@@ -10,6 +10,10 @@
   cursor: pointer;
 }
 
+.m-b-none-i {
+  margin-bottom: 0 !important;
+}
+
 /**
   Nav Sidebar
  */
