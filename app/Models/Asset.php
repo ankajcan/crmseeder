@@ -28,7 +28,9 @@ class Asset extends Model
         'entity_id',
         'entity_type',
         'file_type',
-        'type'
+        'type',
+        'size',
+        'user_id'
     ];
 
     public function entity()

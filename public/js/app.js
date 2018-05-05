@@ -1551,7 +1551,7 @@ $(document).on('click', '#btn-entities-delete', function () {
         if (willDelete) {
             __WEBPACK_IMPORTED_MODULE_0__helper_js__["a" /* default */].startLoading();
             axios.put(base_api + '/contacts/delete', { ids: selected_entities }).then(function (response) {
-                // location.reload();
+                location.reload();
                 __WEBPACK_IMPORTED_MODULE_0__helper_js__["a" /* default */].endLoading();
             }).catch(function (error) {
                 console.log(error);

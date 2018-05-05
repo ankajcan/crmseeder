@@ -3,6 +3,7 @@ namespace Project\Services;
 
 use App\Models\Asset;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\ImageManager;
 
@@ -101,7 +102,8 @@ class FileService {
                 'entity_id' => 0,
                 'entity_type' => 0,
                 'type' => 0,
-                'featured' => 0
+                'size' => filesize($filePath) ? filesize($filePath) : 0,
+                'user_id' => Auth::id()
             ]);
             $newFile->save();
 

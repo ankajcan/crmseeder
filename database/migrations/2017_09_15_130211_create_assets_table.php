@@ -19,6 +19,8 @@ class CreateAssetsTable extends Migration
             $table->string('type');
             $table->integer('entity_id');
             $table->string('entity_type');
+            $table->integer('size')->nullable();
+            $table->integer('user_id')->nullable();
             $table->timestamps();
         });
     }

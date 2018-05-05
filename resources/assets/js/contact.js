@@ -276,7 +276,7 @@ $(document).on('click', '#btn-entities-delete', function(){
                 Helper.startLoading();
                 axios.put(base_api + '/contacts/delete', { ids: selected_entities})
                     .then(response => {
-                        // location.reload();
+                        location.reload();
                         Helper.endLoading();
                     }).catch(function (error) {
                     console.log(error);

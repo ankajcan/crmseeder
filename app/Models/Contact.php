@@ -2,14 +2,18 @@
 
 namespace App\Models;
 
+use App\Events\ContactDeleted;
 use App\Http\Requests\Request;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Project\Services\AwsService;
 use Project\Services\FileService;
 
 class Contact extends Model
 {
+    use Notifiable;
 
     const TYPE_PERSON = 1;
     const TYPE_ORGANISATION = 2;
@@ -23,9 +27,13 @@ class Contact extends Model
 
     protected $fillable = ['type', 'title', 'name', 'first_name', 'last_name', 'email', 'phone', 'user_id', 'company_id'];
 
+    protected $events = [
+        'deleted' => ContactDeleted::class,
+    ];
+
     public function address()
     {
-        return $this->hasOne(Address::class);
+        return $this->hasOne(Address::class, 'contact_id');
     }
 
     public function files()
@@ -84,7 +92,8 @@ class Contact extends Model
                 'entity_id' => $this->id,
                 'entity_type' => self::class,
                 'type' => 0,
-                'featured' => 0
+                'size' => filesize($filePath) ? filesize($filePath) : 0,
+                'user_id' => Auth::id()
             ]);
             $newFile->save();
 

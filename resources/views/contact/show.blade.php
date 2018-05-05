@@ -176,24 +176,26 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <div class="form-group">
-                                    <div class="col-sm-12">
-                                        <h3>
-                                            Notes
-                                            <a id="btn-note-add" class="btn btn-success btn-sm"> <i class="fa fa-plus"></i> Add </a>
-                                        </h3>
-                                        <div class="notes-container">
-                                            @include('components/notes_list',['entities' => $entity->notes])
+                                @if($entity->id)
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <h3>
+                                                Notes
+                                                <a id="btn-note-add" class="btn btn-success btn-sm"> <i class="fa fa-plus"></i> Add </a>
+                                            </h3>
+                                            <div class="notes-container">
+                                                @include('components/notes_list',['entities' => $entity->notes])
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <hr>
+                                    <hr>
+                                @endif
                                 <div class="row">
-                                        <div class="col-xs-8">
+                                        <div class="col-xs-12">
+                                            <button type="submit" class="btn btn-primary">Save</button>
                                             @if($entity->id)
-                                                <a id="btn-delete-entity" data-entity-id="{{ $entity->id }}" class="btn btn-danger pull-left">Delete</a>
+                                                <a id="btn-delete-entity" data-entity-id="{{ $entity->id }}" class="btn btn-danger btn-outline">Delete</a>
                                             @endif
-                                                <button type="submit" class="btn btn-primary pull-right">Save</button>
                                         </div>
                                  </div>
                         </form>

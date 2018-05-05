@@ -18,13 +18,7 @@
         <div class="sidebar-collapse">
             <ul class="nav metismenu" id="side-menu">
                 <li class="nav-header">
-                    <div class="dropdown profile-element">
-                        <a href="#">
-                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">{{ \Illuminate\Support\Facades\Auth::user()->email }}</strong>
-                             </span> <span class="text-muted text-xs block">Admin </span>
-                            </span>
-                        </a>
-                    </div>
+                        <span class="nav-label"><h3><a href="{{ route('dashboard') }}">CRM Seeder</a></h3></span>
                 </li>
                 <li class="@if(Route::current()->getName() == 'dashboard') active @endif">
                     <a href="{{ route('dashboard') }}"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
