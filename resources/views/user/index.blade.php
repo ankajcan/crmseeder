@@ -30,6 +30,8 @@
                         <div class="col-xs-6">
                             <form id="search-form">
                                 <input type="hidden" name="page" />
+                                <input type="hidden" name="sort" />
+                                <input type="hidden" name="order" />
                                 <input type="text" placeholder="Search" name="search" class="input-sm form-control" />
                             </form>
                         </div>

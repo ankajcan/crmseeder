@@ -121,7 +121,15 @@ class User extends Model implements AuthenticatableContract,AuthorizableContract
             });
         }
 
-        $query->orderBy('users.created_at', 'desc');
+        if($request->has('sort')) {
+            if($request->get('sort') == "name") {
+                $query->orderBy('users.first_name', $request->get('order'));
+            } else {
+                $query->orderBy('users.'.$request->get('sort'), $request->get('order'));
+            }
+        } else {
+            $query->orderBy('users.created_at', 'desc');
+        }
 
         $query->distinct();
 

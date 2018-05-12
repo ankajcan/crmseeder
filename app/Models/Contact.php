@@ -174,7 +174,16 @@ class Contact extends Model
             });
         }
 
-        $query->orderBy('contacts.created_at', 'desc');
+        if($request->has('sort')) {
+            if($request->get('sort') == "name") {
+                $query->orderBy('contacts.first_name', $request->get('order'));
+            } else {
+                $query->orderBy('contacts.'.$request->get('sort'), $request->get('order'));
+            }
+        } else {
+            $query->orderBy('contacts.created_at', 'desc');
+        }
+
 
         $query->distinct();
 

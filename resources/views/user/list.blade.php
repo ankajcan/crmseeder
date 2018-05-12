@@ -3,8 +3,8 @@
         <thead>
         <tr>
             <th>#</th>
-            <th>Name</th>
-            <th>Email</th>
+            <th> <span class="cursor-pointer sort" data-sort="name"> Name <i class="fa fa-sort" aria-hidden="true"></i> </span></th>
+            <th> <span class="cursor-pointer sort" data-sort="email"> Email <i class="fa fa-sort" aria-hidden="true"></i> </span></th>
             <th>Roles</th>
             <th>Status</th>
             <th></th>

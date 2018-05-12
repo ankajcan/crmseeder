@@ -201,6 +201,28 @@ function submitSearchForm(options = {}) {
     $( "#search-form").submit();
 }
 
+/**
+ * Sorting
+ */
+
+$(document).on('click', 'span.sort', function(event){
+    let sort = $(this).attr('data-sort');
+    let order = $("#search-form input[name='order']").val();
+
+    if(order === "asc") {
+        order = "desc"
+    } else if(order === "asc") {
+        order = "desc"
+    } else {
+        order = "asc"
+    }
+
+    $("#search-form input[name='sort']").val(sort);
+    $("#search-form input[name='order']").val(order);
+
+    submitSearchForm();
+});
+
 
 /**
  * Pagination
